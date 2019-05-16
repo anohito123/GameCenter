@@ -1,0 +1,99 @@
+<include file="./Application/Admin/View/public/header.html" title="平台明细" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>平台明细</h3>
+							</div>
+							<div class="module-body table">
+                                <div class="alert ts" style="margin: 10px;width: 370px;">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>提示：</strong><span class="tip"></span>
+                                </div>
+                                <form method="post" action="__URL__/platform_detail" name="plat_form">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        选择时间段：
+                                        <input type="text" name="stime"  style="width:100px;height:25px;" id="ECalendar_case1" /> -
+                                        <input type="text" name="etime"  style="width:100px;height:25px;" id="ECalendar_case2"	/>
+                                        <input type="button" class="btn btn-mini btn-info godate" value="查询指定时间"/>
+                                    </div>
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+
+
+									<thead>
+										<tr>
+                                            <th>编号</th>
+											<th>统计日期</th>
+                                            <th>注册人数</th>
+											<th>当日活跃</th>
+                                            <th>总接收分数</th>
+                                            <th>总接收人数</th>
+                                            <th>总赠送分数</th>
+                                            <th>总赠送人数</th>
+                                            <th>总赠送笔数</th>
+                                            <th>总接收笔数</th>
+                                            <th>顺差</th>
+                                            <th>交易税收</th>
+                                            <th>游戏税收</th>
+                                            <th>当日系统输赢</th>
+                                            <th>当日玩家总金币</th>
+                                            <th>当日VIP总金币</th>
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <foreach name="data" item="vo">                                    <tr >
+                                        <td>{$vo.id}</td>
+                                        <td>{$vo.date}</td>
+                                        <td>{$vo.reg_sum}</td>
+                                        <td>{$vo.active}</td>
+
+                                        <td>{$vo.received_score}</td>
+                                        <td>{$vo.received_sum}</td>
+                                        <td>{$vo.present_score}</td>
+                                        <td>{$vo.present_sum}</td>
+                                        <td>{$vo.p_times}</td>
+                                        <td>{$vo.r_times}</td>
+
+                                        <td>{$vo.ab}</td>
+                                        <td>{$vo.today_vip_tax}</td>
+                                        <td>{$vo.today_room_tax}</td>
+                                        <td>{$vo.sys_win}</td>
+                                        <td>{$vo.user_gold}</td>
+                                        <td>{$vo.vip_gold}</td>
+
+										</tr>
+                                    </foreach>
+										
+										
+									</tbody>
+									
+								</table>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

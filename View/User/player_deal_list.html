@@ -1,0 +1,273 @@
+<include file="./Application/Admin/View/public/header.html" title="交易列表" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>交易列表</h3>
+							</div>
+							<div class="module-body table">
+                            <div class="alert ts" style="margin: 10px;width: 370px;">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>提示：</strong><span class="tip"></span>
+                                </div>
+                                <form method="get" action="__URL__/player_deal_list" name="plat_form">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        选择时间段：
+                                        <input type="text" name="stime" value="{$date.stime}"  style="width:100px;height:25px;" id="ECalendar_case1" /> -
+                                        <input type="text" name="etime"  value="{$date.etime}" style="width:100px;height:25px;" id="ECalendar_case2"	/>
+                                        
+                                        
+                                        
+                                        <span style=" margin-left: 20px;"><span style="font-weight: bolder"> 交易类型：</span>
+
+                                            <if condition="$title.pr_type eq 'R'">
+                                                <input type="radio" style="margin: 5px" name="pr_type" value="R" checked="checked" >
+                                                <span style="color:dodgerblue; font-weight: bolder">买分玩家</span>
+                                                <else/>
+                                                <input type="radio" style="margin: 5px" name="pr_type" value="R">买分玩家
+                                            </if>
+
+                                            <if condition="$title.pr_type eq 'P'">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="pr_type" value="P" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">卖分玩家</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="pr_type" value="P" >卖分玩家
+                                            </if>
+
+
+                                        </span>
+
+
+                                        <span style=" margin-left: 20px;"><span style="font-weight: bolder"> 显示条数：</span>
+
+                                            <if condition="$title.page_count eq 500">
+                                                <input type="radio" style="margin: 5px" name="page_count" value="500" checked="checked" >
+                                                <span style="color:dodgerblue; font-weight: bolder">500条</span>
+                                                <else/>
+                                                <input type="radio" style="margin: 5px" name="page_count" value="500">500条
+                                            </if>
+
+                                            <if condition="$title.page_count eq 1000">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="1000" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">1000条</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="1000" >1000条
+                                            </if>
+
+                                            <if condition="$title.page_count eq 2000">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="2000" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">2000条</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="2000" >2000条
+                                            </if>
+
+                                            <if condition="$title.page_count eq 5000">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="5000" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">5000条</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="5000" >5000条
+                                            </if>
+
+
+                                        </span>
+                                        <input type="button" style="margin-left: 10px" class="btn btn-large btn-info godate" value="查询"/>
+                                        
+                                    </div>
+
+
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">玩家总金币：<span style="color: red;font-weight: bolder">{$title.t_gold}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总输赢：<span style="color: red;font-weight: bolder">{$title.t_log_win}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">当日总输赢：<span style="color: red;font-weight: bolder">{$title.t_today_win}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总买分：<span style="color: red;font-weight: bolder">{$title.t_r}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总卖分：<span style="color: red;font-weight: bolder">{$title.t_p}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总顺差：<span style="color: red;font-weight: bolder">{$title.t_ab}</span></span><br>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">交易人数：<span style="color: red;font-weight: bolder">{$title.t_pr_count}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">买分人数：<span style="color: red;font-weight: bolder">{$title.t_r_count}</span></span>
+                                    <span style="padding-left: 15px;margin-right:42px;font-size: 14px">卖分人数：<span style="color: red;font-weight: bolder">{$title.t_p_count}</span></span>
+
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered  display" width="100%" style="padding: 2px">
+									<thead>
+										<tr>
+                                        
+                                       
+											<th>ID</th>
+                                            <th>昵称</th>
+                                            <th>备注<a href="__URL__/player_deal_list?sort=2&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=20&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>金币<a href="__URL__/player_deal_list?sort=3&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=30&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>保险柜金币<a href="__URL__/player_deal_list?sort=4&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=40&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>总输赢<a href="__URL__/player_deal_list?sort=5&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=50&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>当日输赢<a href="__URL__/player_deal_list?sort=6&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=60&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>总买分<a href="__URL__/player_deal_list?sort=7&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=70&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>总卖分<a href="__URL__/player_deal_list?sort=8&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=80&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+
+                                            <th>当日买分(笔数)<a href="__URL__/player_deal_list?sort=9&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=90&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a>
+                                            </th>
+                                            <th>当日卖分(笔数)<a href="__URL__/player_deal_list?sort=11&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=111&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a>
+                                            </th>
+                                            <th>当日顺差<a href="__URL__/player_deal_list?sort=12&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=112&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a>
+                                            </th>
+                                            <th>作弊完成时间<a href="__URL__/player_deal_list?sort=1&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=10&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a></th>
+                                            <th>最后记录时间</th>
+                                            <th>最后赠送时间<a href="__URL__/player_deal_list?sort=15&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▲</a>
+                                                <a href="__URL__/player_deal_list?sort=115&stime={$date.stime}&etime={$date.etime}&page_count={$title.page_count}&pr_type={$title.pr_type}">▼</a>
+                                            </th>
+
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <notempty name="data">
+                                        <foreach name="data" item="vo">
+
+                                            <if condition="$vo.cheat gt 0">
+                                                <tr style="background-color: #c8c9cc">
+                                            </if>
+
+                                            <if condition="$vo.cheat lt 0">
+                                                <tr style="background-color: #9bf99a">
+                                            </if>
+
+                                            <if condition="$vo.cheat eq 0">
+                                                <tr>
+                                            </if>
+
+                                            <if condition="$title.pr_type eq R">
+
+                                                <if condition="$Think.session.power.link_user eq 1">
+                                                    <td><a href="__URL__/player_list?detail_id={$vo.userid2}">{$vo.userid2}</a></td>
+                                                    <td><a href="__URL__/player_list?detail_id={$vo.userid2}">{$vo.nick_name}</a></td>
+                                                    <else/>
+                                                    <td>{$vo.userid2}</td>
+                                                    <td>{$vo.nick_name}</td>
+                                                </if>
+
+
+                                                <else/>
+
+                                                <if condition="$Think.session.power.link_user eq 1">
+                                                    <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                                    <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.nick_name}</a></td>
+                                                    <else/>
+                                                    <td>{$vo.userid}</td>
+                                                    <td>{$vo.nick_name}</td>
+                                                </if>
+
+
+                                            </if>
+
+
+
+                                            <!--<td>{$vo.nick_name}</td>-->
+                                            <td style="color: red">{$vo.remark}</td>
+                                            <td>{$vo.sum_gold}</td>
+                                            <td>{$vo.insure_gold}</td>
+
+                                            <if condition="$vo.log_win gt 0">
+                                                <td style="color: red">{$vo.log_win}</td>
+                                                <else/>
+                                                <td>{$vo.log_win}</td>
+                                            </if>
+
+                                            <if condition="$vo.today_win gt 0">
+                                                <td style="color: red">{$vo.today_win}</td>
+                                                <else/>
+                                                <td>{$vo.today_win}</td>
+                                            </if>
+
+                                            <td>{$vo.r_all}</td>
+                                            <td>{$vo.p_all}</td>
+
+                                            <td>{$vo.r_sum} ({$vo.r_count})</td>
+
+                                            <td>{$vo.p_sum} ({$vo.p_count})</td>
+
+                                            <td>{$vo.tab}</td>
+                                            <td>{$vo.last_cheat}</td>
+                                            <td>{$vo.last_date}</td>
+                                            <td>{$vo.p_time}</td>
+
+
+                                        </tr>
+                                        </foreach>
+
+
+
+                                    <!--<if condition="$Think.session.pr_type eq R">-->
+                                    <!--<foreach name="data" item="vo">                                    <tr >-->
+                                        <!--<td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid2}</a></td>-->
+                                        <!--<td>{$vo.r_sum}</td>-->
+                                        <!--<td>{$vo.r_count}</td>-->
+                                        <!--<td>&#45;&#45;</td>-->
+                                        <!--<td>&#45;&#45;</td>-->
+                                        <!--<td>{$vo.last_date}</td>-->
+
+                                    <!--</tr>-->
+                                    <!--</foreach>-->
+                                   <!--</if>-->
+                                    <!---->
+								 <!--<if condition="$Think.session.pr_type eq P">-->
+                                    <!--<foreach name="data" item="vo">                                    <tr >-->
+                                        <!--<td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>-->
+                                        <!--<td>&#45;&#45;</td>-->
+                                        <!--<td>&#45;&#45;</td>-->
+                                        <!--<td>{$vo.p_sum}</td>-->
+                                        <!--<td>{$vo.p_count}</td>-->
+                                        <!--<td>{$vo.last_date}</td>-->
+
+                                    <!--</tr>-->
+                                    <!--</foreach>-->
+                                   <!--</if>-->
+                                   
+                                   
+                                        <else/>
+                                        <td colspan="6">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

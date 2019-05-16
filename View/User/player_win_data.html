@@ -1,0 +1,98 @@
+<include file="./Application/Admin/View/public/header.html" title="用户输赢" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>用户输赢</h3>
+							</div>
+							<div class="module-body table" style="overflow: auto">
+                                <form method="get" action="__URL__/player_win_data" name="plat_form">
+
+                                    <div>
+                                        选择时间段：
+                                        <input type="text" name="stime" value="{$map.stime}"  style="width:100px;height:25px;" id="ECalendar_case1" /> -
+                                        <input type="text" name="etime" value="{$map.etime}"  style="width:100px;height:25px;" id="ECalendar_case2"	/>
+
+                                        房间ID：
+                                        <input type="number" name="serverid"  value="{$map.sid}" style="width:150px;height:25px;"/>
+
+                                        <input type="button" class="btn btn-mini btn-info godate" value="查询"/>
+                                    </div>
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%">
+									<thead>
+										<tr>
+											<th>ID</th>
+                                            <th>昵称</th>
+											<th>备注</th>
+                                            <th><a href="__URL__/player_win_data?sort=log_win">总输赢</a></th>
+                                            <th><a href="__URL__/player_win_data?sort=today_win">当日输赢</a></th>
+                                            <th><a href="__URL__/player_win_data?sort=cheat">作弊率</a></th>
+                                            <th><a href="__URL__/player_win_data?sort=limit">作弊限额</a></th>
+                                            <th>房间ID</th>
+                                            <th>时间</th>
+
+
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <notempty name="data">
+
+                                    <foreach name="data" item="vo">                                    <tr >
+
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.user_id}">{$vo.user_id}</a></td>
+                                            <td><a href="__URL__/player_list?detail_id={$vo.user_id}">{$vo.nick_name}</a></td>
+                                            <else/>
+                                            <td>{$vo.user_id}</td>
+                                            <td>{$vo.nick_name}</td>
+                                        </if>
+
+
+                                        <td>{$vo.remark}</td>
+
+                                        <td>{$vo.log_win}</td>
+                                        <td>{$vo.today_win}</td>
+                                        <td>{$vo.cheat}</td>
+                                        <td>{$vo.limit}</td>
+                                        <td>{$vo.rooms}</td>
+                                        <td>{$vo.logtime}</td>
+
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="6">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

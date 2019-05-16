@@ -1,0 +1,151 @@
+<include file="./Application/Admin/View/public/header.html" title="房间血池变化" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 98%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>房间血池变化</h3>
+							</div>
+
+							<div class="module-body table">
+
+
+                                <form method="get" action="__URL__/room_blood" name="plat_form">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        选择日期：
+                                        <input type="text" name="rb_stime"  style="width:100px;height:25px;" value="{$Think.session.rb_stime}" id="ECalendar_case1" />
+
+                                        房间ID：
+                                        <input type="text" name="roomid"  style="width:100px;height:25px;" value="{$Think.session.roomid}"  />
+
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="查询"/>
+
+                                    </div>
+                                </form>
+
+                                <empty name="rid">
+                                    <h3 style="margin-left: 20px">请输入房间ID！</h3>
+                                </empty>
+
+                                <div id="main" style="width: 100%;height:500px; margin-left: -5%"></div>
+
+
+                                <!--<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped	 display" width="100%" style="table-layout: fixed">-->
+                                    <!--<thead>-->
+                                    <!--<tr>-->
+                                        <!--<th>房间</th>-->
+                                        <!--<th>人数</th>-->
+
+                                    <!--</tr>-->
+                                    <!--</thead>-->
+                                    <!--<tbody>-->
+                                    <!--<foreach name="data" item="vo">-->
+                                        <!--<tr >-->
+                                            <!--<td>{$vo.name}</td>-->
+                                            <!--<td><a href="__APP__/Admin/User/player_list?online_list=1&roomname={$vo.serverid}">{$vo.total}</a></td>-->
+
+                                        <!--</tr>-->
+                                    <!--</foreach>-->
+
+
+                                    <!--</tbody>-->
+
+                                <!--</table>-->
+
+
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script type="text/javascript">
+
+
+            $("#ECalendar_case1").ECalendar({
+                type:"date",
+                skin:"#233",
+                offset:[0,2]
+            });
+
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+
+            $.get("__URL__/get_room_blood",function(data){
+
+                var arr = data.split(";");
+                var date_arr = arr[0].split(",");
+                var total_arr = arr[1].split(",");
+                console.log(arr[1]);
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '',
+                        left: 'center'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['血池']
+                    },
+                    xAxis: {
+                        axisLabel :{
+                            interval:0
+                        },
+                        name: '时间',
+                        data: date_arr
+                    },
+                    yAxis: { name: '血池'},
+                    series: [{
+                        name: '血池',
+                        type: 'line',
+                        data: total_arr
+                    }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+            });
+
+
+
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

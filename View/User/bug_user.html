@@ -1,0 +1,79 @@
+<include file="./Application/Admin/View/public/header.html" title="刷分玩家" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>刷分玩家</h3>
+							</div>
+							<div class="module-body table">
+                                
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%">
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                            
+                                            <th>刷分</th>
+                                
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <notempty name="data">
+                                    <foreach name="data" item="vo">                                    <tr >
+
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                             
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            
+                                        </if>
+
+                                        <td>{$vo.lscore}</td>
+                                        
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="13">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <form method="get" action="__URL__/player_list" name="player_list" style="float: right;">
+                                    跳转到：
+                                    <input type="number" name="p"  style="width:50px;height:20px;"/>
+
+
+                                    页
+                                    <input type="submit" class="btn btn-mini btn-info godate" value="跳转"/>
+
+                                </form> <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

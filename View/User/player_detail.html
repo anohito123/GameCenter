@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩家详情</title>
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/css/theme.css" rel="stylesheet">
+
+    <link type="text/css" href="__PUBLIC__/admin/css/page.css" rel="stylesheet">
+    <!--<link type="text/css" href="__PUBLIC__/admin/images/icons/css/font-awesome.css" rel="stylesheet">-->
+    <link type="text/css" href="__PUBLIC__/admin/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+          rel='stylesheet'>
+
+    <link rel="stylesheet" href="__PUBLIC__/admin/data/css/style.css" />
+
+    <style>
+        .ts{ display:none; }
+
+        .player_detail{margin-left: 30px !important;text-align: left !important; width: 450px !important; color: #000}
+        .player_detail span{ font-size: 16px}
+        .player_button { width: 220px; height: 35px; line-height: 35px; margin: 10px 110px 10px 0}
+    </style>
+</head>
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>玩家详情</h3>
+							</div>
+							<div class="module-body table">
+                                <empty name="data">
+                                    <h3 style="text-align: center"><span style="color: #0e90d2">请输入一个玩家ID！</span></h3>
+                                    <else/>
+                                    <h3 style="text-align: center">玩家【<span style="color: #0e90d2">{$data[0].nickname}</span>】的详情</h3>
+                                </empty>
+
+
+
+                                <form method="get" class="form-horizontal row-fluid" action="__URL__/player_list" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        玩家ID：
+                                        <input type="number" name="d_id"  style="width:150px;height:25px;"/>
+
+                                        <input type="submit" class="btn btn-default btn-info godate" value="搜索玩家"/>
+                                    </div><br>
+
+
+
+                                    <div class="control-group">
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+                                        <table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%" style="table-layout: fixed">
+                                            <tr>
+                                                <td><span><b>平台ID：</b>  {$data[0].platformid}  </span></td>
+                                                <td><span><b>游戏昵称：</b>  {$data[0].nickname}  </span></td>
+                                                <td><span><b>玩家ID：</b>  {$data[0].userid}  </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>备注信息：</b>  {$data[0].extends}  </span></td>
+                                                <td><span><b>注册时间：</b>  {$data[0].registerdate}  </span></td>
+                                                <!--({$data[0].reg_city.country}-{$data[0].reg_city.city})-->
+                                                <td><span><b>注册IP：</b>  {$data[0].registerip}    </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>最后登录时间：</b>  {$data[0].lastlogindate}   </span></td>
+                                                <!--({$data[0].log_city.country}-{$data[0].log_city.city})-->
+                                                <td><span><b>最后登录IP：</b>  {$data[0].lastloginip}    <a href="__URL__/ip_relation?ip={$data[0].lastlogonip}">【关联查询】</a>
+                                                <a href="javascript:0" id="lir">【批量备注】</a>
+                                                <if condition="$Think.session.power.lot_ban_deal eq 1">
+                                                    <a href="__URL__/lot_ip_lock?code={$data[0].lastlogonip}&uid={$data[0].userid}" class="lot_lock">【批量禁止交易】</a>
+                                                    <a href="__URL__/lot_ip_unlock?code={$data[0].lastlogonip}&uid={$data[0].userid}" class="lot_lock">【批量解除禁止交易】</a>
+                                                     </if>
+                                                </span></td>
+                                                <td><span><b>绑定手机：</b>
+                                                <if condition="$Think.session.power.ud_phone eq 1">
+                                                    {$data[0].phonenum}  <a href="__URL__/mobile_relation?mb_num={$data[0].phonenum}">【关联查询】</a>
+                                                    <else/>
+                                                    ******
+                                                </if>
+                                                </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>在线时长：</b> {$data[0].gamelogontimes}  </span></td>
+                                                <td><span><b>金币：</b>   {$data[0].score} </span></td>
+                                                <td><span><b>总输赢：</b>  {$data[0].totalwinlose} </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>当日输赢：</b>   {$data[0].daywinlose}   </span></td>
+                                                <td><span><b>3日总输赢：</b>   {$data[0].day3_win}  </span></td>
+                                                <td><span><b>账号类型：</b>
+                                                    <notempty name="data">
+
+                                                <if condition = "$data[0][viplevel] eq 0">
+                                                <span>普通玩家</span>
+                                                    <else/>
+                                                     <span style="color: red">VIP</span>
+                                                </if>
+                                                <else/>
+                                                --
+                                            </notempty>  </span></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>总接收：</b> {$data[0].received_sum}  </span></td>
+                                                <td><span><b>总接收玩家：</b>  {$data[0].transinnormal}  </span></td>
+                                                <td><span><b>总接收VIP：</b> {$data[0].transinvip} </span></td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td><span><b>总赠送：</b>  {$data[0].present_sum}  </span></td>
+                                                <td><span><b>总赠送玩家：</b>  {$data[0].transoutnormal}  </span></td>
+                                                <td><span><b>总赠送VIP：</b>  {$data[0].transoutvip}  </span></td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td><span><b>顺差：(赠送玩家-接收玩家)</b>
+                                                <if condition = "$data[0][p_ab] gt 0">
+                                                    {$data[0].p_ab}
+                                                    <else/>
+                                                    <span style="color: red">{$data[0].p_ab}</span>
+                                                </if>
+                                                </span></td>
+
+                                                <td><span><b>账号状态：</b>  <if condition = "$data[0][forbidlogin] eq '1'">
+                                            锁定中
+                                            <else/>
+                                            正常
+                                        </if>  </span></td>
+                                                <td><span><b>能否交易：</b> <if condition = "$data[0][forbidtrans] eq '1'">
+                                            禁止交易
+                                            <else/>
+                                            允许交易
+                                        </if>  </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>注册机器码：</b> {$data[0].registermachineid}  <a href="__URL__/code_relation?code={$data[0].machineserial}">【关联查询】</a>
+                                                <a href="javascript:0" id="lcr">【批量备注】</a>
+                                                     <if condition="$Think.session.power.lot_ban_deal eq 1">
+                                                    <a href="__URL__/lot_code_lock?code={$data[0].machineserial}&uid={$data[0].userid}" class="lot_lock">【批量禁止交易】</a>
+                                                    <a href="__URL__/lot_code_unlock?code={$data[0].machineserial}&uid={$data[0].userid}" class="lot_lock">【批量解除禁止交易】</a>
+                                                     </if>
+                                                </span></td>
+                                                <td><span><b>游戏控制：</b> <if condition = "$data[0][cheat] gt 0">
+                                           吃分点控中
+                                        </if>
+
+                                             <if condition = "$data[0][cheat] lt 0">
+                                           吐分点控中
+                                        </if>
+
+                                              <if condition = "$data[0][cheat] eq 0">
+                                           未点控
+                                        </if>
+
+                                             / 作弊率：{$data[0].cheatrate} / 作弊限额：{$data[0].cheatvalueview} /剩余作弊金币：{$data[0].cheatvalue} /上次作弊完成时间：{$data[0].endcheatdate}  </span></td>
+                                                <td><span><b>保险柜金币：</b>   {$data[0].insurescore}  </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>当前房间：</b>  <if condition = "$data[0][current_room] eq '大厅'">
+                                           --
+                                            <else/>
+                                             {$data[0].current_room}
+                                        </if>  </span></td>
+                                                <td><span><b>平台：</b>
+                                                    <if condition = "$data[0][appplatform] eq 1">
+                                                        苹果
+                                                    </if>
+                                                    <if condition = "$data[0][appplatform] eq 2">
+                                                        安卓
+                                                    </if>
+                                                    <if condition = "$data[0][appplatform] eq 3">
+                                                        PC
+                                                    </if>
+                                                </span></td>
+                                               <td><span><b>首选游戏：</b> {$data[0].first_room} </span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><b>最后登录机器码：</b>
+                                                    {$data[0].lastloginmachineid}
+                                                </span></td>
+                                                <td>--</td>
+                                                <td>--</td>
+                                            </tr>
+                                        </table>
+
+                                        <!--<label class="control-label player_detail" ><span><b>游戏推广号：</b>  {$data[0].gameid}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>游戏昵称：</b>  {$data[0].nickname}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>玩家ID：</b>  {$data[0].userid}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>备注信息：</b>  {$data[0].remark}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>注册时间：</b>  {$data[0].registerdate}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>注册IP：</b>  {$data[0].registerip}  ({$data[0].reg_city.country}-{$data[0].reg_city.city}) </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>最后登录时间：</b>  {$data[0].lastlogintime}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>最后登录IP：</b>  {$data[0].lastlogonip}  ({$data[0].log_city.country}-{$data[0].log_city.city})  <a href="__URL__/ip_relation?ip={$data[0].lastlogonip}">【关联查询】</a></span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>绑定手机：</b>  {$data[0].phonenum}  <a href="__URL__/mobile_relation?mb_num={$data[0].phonenum}">【关联查询】</a></span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>在线时长：</b>  {$data[0].gamelogontimes}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>金币：</b>  {$data[0].sum_gold}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>总输赢：</b>  {$data[0].log_win}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>当日输赢：</b>  {$data[0].today_win}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>3日总输赢：</b>  {$data[0].day3_win}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>总赠送：</b>  {$data[0].present_sum}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>总接收：</b>  {$data[0].received_sum}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>账号类型：</b>-->
+
+                                            <!--<notempty name="data">-->
+                                                <!--<if condition = "$data[0][usertype] eq 4">-->
+                                                <!--<span style="color: red">VIP</span>-->
+                                                <!--</if>-->
+                                                <!--<if condition = "$data[0][usertype] eq 0">-->
+                                                <!--<span>普通玩家</span>-->
+                                                <!--</if>-->
+                                                <!--<else/>-->
+                                                <!--&#45;&#45;-->
+                                            <!--</notempty>-->
+
+                                        <!--</span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>首选游戏：</b>  {$data[0].first_room}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>是否在线：</b>-->
+                                             <!--<if condition = "$data[0][current_room] eq '大厅'">-->
+                                           <!--未在房间-->
+                                        <!--</if>-->
+
+                                            <!--<if condition = "$data[0][current_room] neq '大厅'">-->
+                                           <!--是-->
+                                        <!--</if>-->
+
+
+                                        <!--</span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>账号状态：</b>-->
+                                            <!--<if condition = "$data[0][limitlogin] eq '1'">-->
+                                            <!--锁定中-->
+                                            <!--<else/>-->
+                                            <!--正常-->
+                                        <!--</if>-->
+
+                                        <!--</span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>能否交易：</b>-->
+                                        <!--<if condition = "$data[0][isDeal] eq '1'">-->
+                                            <!--禁止交易-->
+                                            <!--<else/>-->
+                                            <!--允许交易-->
+                                        <!--</if>-->
+                                        <!--</span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>机器码：</b>  {$data[0].machineserial}  <a href="__URL__/code_relation?code={$data[0].machineserial}">【关联查询】</a></span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>游戏控制：</b>-->
+
+                                          <!--<if condition = "$data[0][cheat] gt 0">-->
+                                           <!--吃分点控中-->
+                                        <!--</if>-->
+
+                                             <!--<if condition = "$data[0][cheat] lt 0">-->
+                                           <!--吐分点控中-->
+                                        <!--</if>-->
+
+                                              <!--<if condition = "$data[0][cheat] eq 0">-->
+                                           <!--未点控-->
+                                        <!--</if>-->
+
+                                             <!--/ 作弊率：{$data[0].cheat} / 作弊限额：{$data[0].limit} /剩余作弊金币：{$data[0].sp} /上次作弊完成时间：{$data[0].endcheatdate}-->
+
+                                        <!--</span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>保险柜金币：</b>  {$data[0].insure_gold}  </span></label>-->
+                                        <!--<label class="control-label player_detail" ><span><b>当前房间：</b>-->
+                                        <!--<if condition = "$data[0][current_room] eq '大厅'">-->
+                                           <!--&#45;&#45;-->
+                                            <!--<else/>-->
+                                             <!--{$data[0].current_room}-->
+                                        <!--</if>-->
+
+                                        <!--</span></label>-->
+
+                                    </div>
+
+                                </form>
+
+                                <hr>
+
+                                <notempty name="data">
+                                <h4 style="margin: 30px;"> 数据查询操作</h4>
+                                <div style="margin: 30px;">
+
+                                    <if condition="$Think.session.power.loginlog eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="__URL__/player_login_log?d_id={$data[0].userid}">登录记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.p_log eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="__URL__/player_presents_log?p_userid={$data[0].gameid}">金币赠送记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.r_log eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="__URL__/player_presents_log?r_userid={$data[0].gameid}">金币接收记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.goldchange eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="__URL__/player_gold_change_log?userid={$data[0].gameid}">金币变动记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.sumgoldchange eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="__URL__/sum_gold_change?userid={$data[0].userid}">总金币变动记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.controllerlog eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/ctr_record',array('userid'=>$data[0]['gameid']))}">管理员点控记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.goldlog eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/do_log',array('tid'=>2,'userid'=>$data[0]['gameid']))}">管理员添加金币记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.locklog eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/do_log',array('tid'=>3,'userid'=>$data[0]['gameid']))}">管理员锁定记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.ban_deal_log eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/do_log',array('tid'=>4,'userid'=>$data[0]['gameid']))}">管理员禁止交易记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.usertype_log eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/do_log',array('tid'=>5,'userid'=>$data[0]['gameid']))}">管理员修改类型记录</a>
+                                    </if>
+
+                                    <if condition="$Think.session.power.pool_log eq 1">
+                                    <a class="btn btn-large btn-primary player_button" href="{:U('System/do_log',array('tid'=>6,'userid'=>$data[0]['gameid']))}">添加奖池金币记录</a>
+                                    </if>
+
+
+
+
+                                </div>
+
+                                    <h4 style="margin: 30px;"> 数据修改操作</h4>
+                                    <div style="margin: 30px;">
+
+                                        <if condition="$Think.session.power.ud_addgold eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="add_gold">增加/扣除金币</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_ctr eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="user_ctr">玩家点控</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_lock eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="user_lock">锁定/解锁玩家</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_ban_deal eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="deal_lock">禁止/解除交易</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_usertype eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="type_change">修改玩家类型</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_remark eq 1">
+                                        <a class="btn btn-large btn-primary player_button" href="javascript:0" id="remark_change">修改玩家备注</a>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_pwd_change eq 1">
+                                            <a class="btn btn-large btn-primary player_button" href="javascript:0" id="pwd_change">修改玩家密码</a>
+                                        </if>
+
+
+                                        <if condition="$Think.session.power.ud_add_insure eq 1">
+                                            <a class="btn btn-large btn-primary player_button" href="javascript:0" id="add_insure">添加奖池金币</a>
+                                        </if>
+
+                                    </div>
+
+
+                                </notempty>
+
+							</div>
+
+
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+        <!--添加/扣除金币-->
+        <div class="gold_tip" style="width: 400px; text-align: center; display: none; position: fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+        <form class="form-horizontal row-fluid" method="post" action="__URL__/add_gold" name="add_gold">
+
+            <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+            <div class="control-group">
+
+                <h3>添加/扣除金币</h3>
+                <label class="radio-inline">
+                    <b>添加数量：</b> <input type="number" name="gold"  placeholder="正数为增加，负数为扣除" />
+                </label><br>
+
+                <label class="radio-inline">
+                    <b>操作原因：</b>
+                    <select name="rmk">
+                        <option>内部测试</option>
+                        <option>正常操作</option>
+                        <option>反馈赠送</option>
+                        <option>反馈奖励</option>
+                        <option>补分</option>
+                        <option>扣回</option>
+                        <option>其他</option>
+                    </select>
+                </label><br>
+
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn btn-mini btn-info">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                </div>
+            </div>
+        </form>
+        </div>
+
+        <!--添加/扣除保险柜金币-->
+        <div class="insure_tip" style="width: 400px; text-align: center; display: none; position: fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_add_insure" name="add_insure">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>添加/扣除</h3>
+                    <label class="radio-inline">
+                        <b>添加数量：</b> <input type="number" name="gold"  placeholder="正数为增加，负数为扣除" />
+                    </label><br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-mini btn-info">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--玩家点控-->
+        <div class="ctr_tip" style="width: 400px; text-align: center; display: none; position: fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_ctr" name="user_ctr">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>玩家点控</h3>
+
+
+                    <label class="radio-inline">
+                        <b>修改作弊率：</b>
+                            <select name="cheat">
+                                    <option value="1000"  selected = "selected">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="3000">3000</option>
+                            </select>
+
+                    </label><br>
+
+
+                    <label class="radio-inline">
+                        <b>修改作弊值：</b> <input type="number" name="limit"  />
+                    </label><br>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info do_ctr">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--锁定玩家-->
+        <div class="lock_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_lock" name="go_lock">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>锁定/解锁玩家</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>玩家状态：</b>
+                        <select name="lock">
+
+                            <if condition = "$data[0][forbidlogin] eq '1'">
+
+                                <option value="1"  selected = "selected">锁定</option>
+                                <option value="0">正常</option>
+                                <else/>
+                                <option value="1" >锁定</option>
+                                <option value="0" selected = "selected">正常</option>
+                            </if>
+
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>操作原因：</b>
+                        <textarea name="lock_remark"></textarea>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_lock">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!--禁止交易-->
+        <div class="deal_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_bandeal" name="go_bandeal">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>禁止/解除交易</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>玩家状态：</b>
+                        <select name="typeid">
+
+
+                            <if condition = "$data[0][forbidtrans] eq '1'">
+                                <option value="1"  selected = "selected">禁止交易</option>
+                                <option value="0">允许交易</option>
+                                <else/>
+                                <option value="1">禁止交易</option>
+                                <option value="0" selected = "selected">允许交易</option>
+                            </if>
+
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>操作原因：</b>
+                        <textarea name="deal_remark"></textarea>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_bandeal">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!--修改玩家类型-->
+        <div class="change_type_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_change_type" name="go_change_type">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>修改玩家类型</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>玩家类型：</b>
+                        <select name="usertype">
+
+
+                            <if condition = "$data[0][usertype] eq '1'">
+                                <option value="1"  selected = "selected">VIP</option>
+                                <option value="0">普通玩家</option>
+                                <else/>
+                                <option value="1">VIP</option>
+                                <option value="0" selected = "selected">普通玩家</option>
+                            </if>
+
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>操作原因：</b>
+                        <textarea name="change_remark"></textarea>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_change_type">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--修改玩家备注-->
+        <div class="remark_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_change_rmk" name="go_remark">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>修改玩家备注</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>备注信息：</b>
+                        <input type="text" value="{$data[0].extends}" name="player_remark"/>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_remark">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--机械码批量备注-->
+        <div class="lcr_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/lot_code_rmk" name="go_lcr">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+                <input type="hidden" value="{$data[0].machineserial}" name="code"/>
+
+                <div class="control-group">
+
+                    <h3>批量备注</h3>
+
+                    <label class="radio-inline">
+                        <b>备注信息：</b>
+                        <input type="text" name="rmk" id="lcr_rmk"/>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_lcr">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--手机批量备注-->
+        <div class="lpr_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/lot_phone_rmk" name="go_lpr">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+                <input type="hidden" value="{$data[0].phonenum}" name="phone"/>
+
+                <div class="control-group">
+
+                    <h3>批量备注</h3>
+
+                    <label class="radio-inline">
+                        <b>备注信息：</b>
+                        <input type="text" name="rmk" id="lpr_rmk"/>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_lpr">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--ip批量备注-->
+        <div class="lir_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/lot_ip_rmk" name="go_lir">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+                <input type="hidden" value="{$data[0].lastlogonip}" name="ip"/>
+
+                <div class="control-group">
+
+                    <h3>批量备注</h3>
+
+                    <label class="radio-inline">
+                        <b>备注信息：</b>
+                        <input type="text" name="rmk" id="lir_rmk"/>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_lir">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+
+        <!--修改密码-->
+        <div class="pwd_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_change_pass" name="go_pwd">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>修改玩家密码</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>新密码：</b>
+                        <input type="password"  name="player_pwd"/>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_pwd">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!--添加奖池金币操作------------------------------------------------------------------------->
+
+
+        <!--水果拉霸-->
+        <div class="sglb_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_sglb">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>神庙水果</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6201"  selected = "selected">神庙水果-初级场</option>
+                            <option value="6202"  >神庙水果-中级场</option>
+                            <option value="6203"  >神庙水果-高级场</option>
+                            <option value="6204"  >神庙水果-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="sglb_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_sglb">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--世界大战-->
+        <div class="sjdz_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_sjdz">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>世界大战</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6211"  selected = "selected">世界大战-初级场</option>
+                            <option value="6212"  >世界大战-中级场</option>
+                            <option value="6213"  >世界大战-高级场</option>
+                            <option value="6214"  >世界大战-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="sjdz_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_sjdz">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--侏罗纪-->
+        <div class="zlj_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_zlj">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>侏罗纪世界</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6241"  selected = "selected">侏罗纪世界-初级场</option>
+                            <option value="6242"  >侏罗纪世界-中级场</option>
+                            <option value="6243"  >侏罗纪世界-高级场</option>
+                            <option value="6244"  >侏罗纪世界-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="zlj_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_zlj">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--玛雅神庙-->
+        <div class="mysm_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_mysm">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>玛雅神庙</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6231"  selected = "selected">玛雅神庙-初级场</option>
+                            <option value="6232"  >玛雅神庙-中级场</option>
+                            <option value="6233"  >玛雅神庙-高级场</option>
+                            <option value="6234"  >玛雅神庙-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="mysm_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_mysm">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--大四喜-->
+        <div class="dsx_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_dsx">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>大四喜</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6191"  selected = "selected">大四喜-初级场</option>
+                            <option value="6192"  >大四喜-中级场</option>
+                            <option value="6193"  >大四喜-高级场</option>
+                            <option value="6194"  >大四喜-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="dsx_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_dsx">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--马里奥-->
+        <div class="mla_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_mla">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>马里奥</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6331"  selected = "selected">马里奥-初级场</option>
+                            <option value="6332"  >马里奥-中级场</option>
+                            <option value="6333"  >马里奥-高级场</option>
+                            <option value="6334"  >马里奥-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="mla_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_mla">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--五福临门-->
+        <div class="wflm_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_wflm">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>五福临门</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6171"  selected = "selected">五福临门-初级场</option>
+                            <option value="6172"  >五福临门-中级场</option>
+                            <option value="6173"  >五福临门-高级场</option>
+                            <option value="6174"  >五福临门-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="wflm_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_wflm">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--21点-->
+        <div class="e21_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_e21">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>21点</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6011"  selected = "selected">21点-初级场</option>
+                            <option value="6012"  >21点-中级场</option>
+                            <option value="6013"  >21点-高级场</option>
+                            <option value="6014"  >21点-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="e21_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_e21">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--2d捕鱼-->
+        <div class="by2d_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_by2d">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>2d捕鱼</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6111"  selected = "selected">2d捕鱼-初级场</option>
+                            <option value="6112"  >2d捕鱼-中级场</option>
+                            <option value="6113"  >2d捕鱼-高级场</option>
+                            <option value="6114"  >2d捕鱼-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="by2d_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_by2d">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--水果老虎机-->
+        <div class="sglhj_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_sglhj">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>水果老虎机</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6121"  selected = "selected">水果老虎机-初级场</option>
+                            <option value="6122"  >水果老虎机-中级场</option>
+                            <option value="6123"  >水果老虎机-高级场</option>
+                            <option value="6124"  >水果老虎机-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="sglhj_gold" />
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_sglhj">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--小矮人-->
+        <div class="xar_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_xar">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>小矮人</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6261"  selected = "selected">小矮人-初级场</option>
+                            <option value="6262"  >小矮人-中级场</option>
+                            <option value="6263"  >小矮人-高级场</option>
+                            <option value="6264"  >小矮人-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="xar_gold" />
+                    </label>
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_xar">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--博士-->
+        <div class="bs_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_bs">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>博士</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6271"  selected = "selected">博士-初级场</option>
+                            <option value="6272"  >博士-中级场</option>
+                            <option value="6273"  >博士-高级场</option>
+                            <option value="6274"  >博士-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="bs_gold" />
+                    </label>
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_bs">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--水果玛丽-->
+        <div class="sgml_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_sgml">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>水果玛丽</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6281"  selected = "selected">水果玛丽-初级场</option>
+                            <option value="6282"  >水果玛丽-中级场</option>
+                            <option value="6283"  >水果玛丽-高级场</option>
+                            <option value="6284"  >水果玛丽-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="sgml_gold" />
+                    </label>
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_sgml">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--超级水果玛丽-->
+        <div class="cjsgml_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_cjsgml">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>超级水果玛丽</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6321"  selected = "selected">超级水果玛丽-初级场</option>
+                            <option value="6322"  >超级水果玛丽-中级场</option>
+                            <option value="6323"  >超级水果玛丽-高级场</option>
+                            <option value="6324"  >超级水果玛丽-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>添加金币：</b>
+                        <input type="number" name="gold" id="cjsgml_gold" />
+                    </label>
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_cjsgml">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!--45滴血-->
+        <div class="dx45_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_dx45">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>滴血2</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6311"  selected = "selected">滴血2-初级场</option>
+                            <option value="6312"  >滴血2-中级场</option>
+                            <option value="6313"  >滴血2-高级场</option>
+                            <option value="6314"  >滴血2-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>选择滴血倍数：</b>
+                        <select name="gold">
+                            <option value="2001"  class="dx45_gold"  selected = "selected">五滴血</option>
+                            <option value="2002"  class="dx45_gold" >四滴血18225-1</option>
+                            <option value="2003"  class="dx45_gold">四滴血18225-2</option>
+
+                            <option value="2004"  class="dx45_gold">四滴血18225-3</option>
+                            <option value="2005"  class="dx45_gold">四滴血18225-4</option>
+                            <option value="2006"  class="dx45_gold">四滴血18225-5</option>
+                            <option value="2007"  class="dx45_gold">四滴血18225-6</option>
+                            <option value="2008"  class="dx45_gold">四滴血18225-7</option>
+                            <option value="2009"  class="dx45_gold">四滴血18225-8</option>
+                            <option value="2010"  class="dx45_gold">四滴血18225-9</option>
+                            <option value="2011"  class="dx45_gold">四滴血18225-10</option>
+                            <option value="2012"  class="dx45_gold">四滴血18225-11</option>
+                            <option value="2013"  class="dx45_gold">四滴血18225-12</option>
+                            <option value="2014"  class="dx45_gold">四滴血18225-13</option>
+                            <option value="2015"  class="dx45_gold">四滴血18225-14</option>
+                            <option value="2016"  class="dx45_gold">四滴血18225-15</option>
+                            <option value="2017"  class="dx45_gold">四滴血18225-16</option>
+                            <option value="2018"  class="dx45_gold">四滴血198450</option>
+                            <option value="2019"  class="dx45_gold">四滴血109350</option>
+                            <option value="2020"  class="dx45_gold">四滴血76950</option>
+                            <option value="2021"  class="dx45_gold">四滴血68850</option>
+                            <option value="2022"  class="dx45_gold">四滴血50625</option>
+                            <option value="2023"  class="dx45_gold">四滴血62775</option>
+                            <option value="2024"  class="dx45_gold">四滴血32400-1</option>
+                            <option value="2025"  class="dx45_gold">四滴血32400-2</option>
+                            <option value="2026"  class="dx45_gold">四滴血32400-3</option>
+                            <option value="2027"  class="dx45_gold">四滴血32400-4</option>
+                            <option value="2028"  class="dx45_gold">四滴血32400-5</option>
+                            <option value="2029"  class="dx45_gold">四滴血30375</option>
+                            <option value="2030"  class="dx45_gold">四滴血40500-1</option>
+                            <option value="2031"  class="dx45_gold">四滴血40500-2</option>
+
+
+                        </select>
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_dx45">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!--23滴血-->
+        <div class="dx23_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/player_pool_gold" name="go_dx23">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>23滴血</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <option value="6221"  selected = "selected">不朽情缘-初级场</option>
+                            <option value="6222"  >不朽情缘-中级场</option>
+                            <option value="6223"  >不朽情缘-高级场</option>
+                            <option value="6224"  >不朽情缘-大师场</option>
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>选择滴血数：</b>
+                        <select name="dx_num">
+                            <option value="2"  class="dx_num"  selected = "selected">2滴血</option>
+                            <option value="3"  class="dx_num" >3滴血</option>
+
+                        </select>
+                    </label>
+
+                    <label class="radio-inline">
+                        <b>选择滴血数范围：</b>
+                        <select name="gold">
+                            <option value="200-399"  class="dx23_range"  selected = "selected">200-399</option>
+                            <option value="400-599"  class="dx23_range"  >400-599</option>
+                            <option value="600-799"  class="dx23_range"  >600-799</option>
+                            <option value="800-999"  class="dx23_range"  >800-999</option>
+                            <option value="1000-1199"  class="dx23_range" >1000-1199</option>
+                            <option value="1200-1399"  class="dx23_range"  >1200-1399</option>
+                            <option value="1400-1599"  class="dx23_range"  >1400-1599</option>
+                            <option value="1600-1599"  class="dx23_range"  >1600-1599</option>
+                        </select>
+                    </label>
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_dx23">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+
+                $('.lot_lock').click(function () {
+
+                    if(confirm("确认批量封号？")){
+                        return true
+                    }else {
+                        return false
+                    }
+                })
+
+                $('#add_insure').click(function () {
+                    $('.insure_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#add_gold').click(function () {
+                    $('.gold_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#user_ctr').click(function () {
+                    $('.ctr_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#user_lock').click(function () {
+                    $('.lock_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#deal_lock').click(function () {
+                    $('.deal_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#type_change').click(function () {
+                    $('.change_type_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#remark_change').click(function () {
+                    $('.remark_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sglb').click(function () {
+                    $('.sglb_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sjdz').click(function () {
+                    $('.sjdz_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#zlj').click(function () {
+                    $('.zlj_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dsx').click(function () {
+                    $('.dsx_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dx23').click(function () {
+                    $('.dx23_tip').fadeIn(200).animate({top:'30%'},270);
+                    //$('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dx45').click(function () {
+                    $('.dx45_tip').fadeIn(200).animate({top:'30%'},270);
+                    //$('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#mysm').click(function () {
+                    $('.mysm_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#mla').click(function () {
+                    $('.mla_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#wflm').click(function () {
+                    $('.wflm_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#e21').click(function () {
+                    $('.e21_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#by2d').click(function () {
+                    $('.by2d_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sglhj').click(function () {
+                    $('.sglhj_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#xar').click(function () {
+                    $('.xar_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#bs').click(function () {
+                    $('.bs_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sgml').click(function () {
+                    $('.sgml_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#cjsgml').click(function () {
+                    $('.cjsgml_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#pwd_change').click(function () {
+                    $('.pwd_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#lcr').click(function () {
+                    $('.lcr_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#lpr').click(function () {
+                    $('.lpr_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#lir').click(function () {
+                    $('.lir_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+
+
+
+                $('.cls_tip').click(function () {
+                    $('.lcr_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.lir_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.lpr_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.cjsgml_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.insure_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.pwd_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.wflm_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.mla_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.gold_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sglb_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sjdz_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.zlj_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.mysm_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.e21_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.by2d_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sglhj_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.xar_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.bs_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sgml_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.dsx_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.dx23_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.dx45_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.remark_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.lock_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.deal_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.change_type_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.ctr_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.wrapper').animate({opacity:'1'},300);
+
+                    $(".ts").hide(80)
+                })
+
+                $('.go_pwd').click(function () {
+                    var pwd = $('input[name="player_pwd"]').val();
+                    if(typeof (pwd) == 'undefined' || pwd == null || pwd==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入新密码");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_pwd"]').submit();
+                    }
+                })
+
+                $('.do_ctr').click(function () {
+                    var cheat = $('input[name="cheat"]').val();
+                    if(cheat>10000 || cheat<-10000){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("作弊率范围为-10000~10000");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="user_ctr"]').submit();
+                    }
+                })
+
+                //锁定玩家
+                $('.go_lock').click(function () {
+                    var remark = $('textarea[name="lock_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_lock"]').submit();
+                    }
+                })
+
+                //禁止交易
+                $('.go_bandeal').click(function () {
+                    var remark = $('textarea[name="deal_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_bandeal"]').submit();
+                    }
+                })
+
+                //修改玩家类型
+                $('.go_change_type').click(function () {
+                    var remark = $('textarea[name="change_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_change_type"]').submit();
+                    }
+                })
+
+                //修改玩家备注
+                $('.go_remark').click(function () {
+
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_remark"]').submit();
+
+                })
+
+                //批量修改玩家备注
+                $('.go_lcr').click(function () {
+
+                    $(".ts").show(80);
+                    $(".ts").removeClass('alert-error');
+                    $(".ts").addClass('alert-success');
+                    $(".tip").text("修改成功！");
+                    $('form[name="go_lcr"]').submit();
+
+                })
+
+                $('.go_lir').click(function () {
+
+                    $(".ts").show(80);
+                    $(".ts").removeClass('alert-error');
+                    $(".ts").addClass('alert-success');
+                    $(".tip").text("修改成功！");
+                    $('form[name="go_lir"]').submit();
+
+                })
+
+                $('.go_lpr').click(function () {
+
+                    $(".ts").show(80);
+                    $(".ts").removeClass('alert-error');
+                    $(".ts").addClass('alert-success');
+                    $(".tip").text("修改成功！");
+                    $('form[name="go_lpr"]').submit();
+
+                })
+
+
+                //水果拉霸
+                $('.go_sglb').click(function () {
+                    var remark = $('#sglb_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sglb"]').submit();
+                    }
+                })
+
+                //世界大战
+                $('.go_sjdz').click(function () {
+                    var remark = $('#sjdz_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sjdz"]').submit();
+                    }
+                })
+
+
+                //侏罗纪
+                $('.go_zlj').click(function () {
+                    var remark = $('#zlj_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_zlj"]').submit();
+                    }
+                })
+
+                //玛雅
+                $('.go_mysm').click(function () {
+                    var remark = $('#mysm_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_mysm"]').submit();
+                    }
+                })
+
+                //大四喜
+                $('.go_dsx').click(function () {
+                    var remark = $('#dsx_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_dsx"]').submit();
+                    }
+                })
+
+                //马里奥
+                $('.go_mla').click(function () {
+                    var remark = $('#mla_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_mla"]').submit();
+                    }
+                })
+
+
+                //五福临门
+                $('.go_wflm').click(function () {
+                    var remark = $('#wflm_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_wflm"]').submit();
+                    }
+                })
+
+                //21点
+                $('.go_e21').click(function () {
+                    var remark = $('#e21_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_e21"]').submit();
+                    }
+                })
+
+                //2d捕鱼
+                $('.go_by2d').click(function () {
+                    var remark = $('#by2d_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_by2d"]').submit();
+                    }
+                })
+
+                //水果老虎机
+                $('.go_sglhj').click(function () {
+                    var remark = $('#sglhj_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sglhj"]').submit();
+                    }
+                })
+
+                //小矮人
+                $('.go_xar').click(function () {
+                    var remark = $('#xar_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_xar"]').submit();
+                    }
+                })
+
+                //博士
+                $('.go_bs').click(function () {
+                    var remark = $('#bs_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_bs"]').submit();
+                    }
+                })
+
+                //水果玛丽
+                $('.go_sgml').click(function () {
+                    var remark = $('#sgml_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sgml"]').submit();
+                    }
+                })
+
+                //超级水果玛丽
+                $('.go_cjsgml').click(function () {
+                    var remark = $('#cjsgml_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_cjsgml"]').submit();
+                    }
+                })
+
+                //23滴血
+                $('.go_dx23').click(function () {
+
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        //$(".tip").text("添加成功！");
+                        //$('form[name="go_dx23"]').submit();
+
+                })
+
+                //45滴血
+                $('.go_dx45').click(function () {
+                    var remark = $('.dx45_gold').val();
+
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_dx45"]').submit();
+                    }
+                })
+
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+
+      
+    </body>

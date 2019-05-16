@@ -1,0 +1,37 @@
+﻿<include file="./Application/Admin/View/public/header.html" title="-提示" />
+<style>
+	.err{ margin:150px auto;   text-align:center}
+	
+</style>
+<body>
+
+	<include file="./Application/Admin/View/public/nav.html"  />
+	</div><!-- /navbar -->
+
+
+
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="err">
+					<h3>{$tip}</h3><span id="wait">2</span>秒后离开此页，若无响应请<a id="href" href="{$path}">手动返回</a>
+				</div>
+			</div>
+		</div>
+	</div><!--/.wrapper-->
+
+	<include file="./Application/Admin/View/public/footer.html" /> 
+    <script type="text/javascript">
+(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>
+</body>

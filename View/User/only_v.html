@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开通VIP</title>
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/css/theme.css" rel="stylesheet">
+
+    <link type="text/css" href="__PUBLIC__/admin/css/page.css" rel="stylesheet">
+    <!--<link type="text/css" href="__PUBLIC__/admin/images/icons/css/font-awesome.css" rel="stylesheet">-->
+    <link type="text/css" href="__PUBLIC__/admin/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+          rel='stylesheet'>
+
+    <link rel="stylesheet" href="__PUBLIC__/admin/data/css/style.css" />
+
+    <style>
+        .ts{ display:none; }
+
+        .player_detail{margin-left: 30px !important;text-align: left !important; width: 450px !important; color: #000}
+        .player_detail span{ font-size: 16px}
+        .player_button { width: 220px; height: 35px; line-height: 35px; margin: 10px 110px 10px 0}
+    </style>
+</head>
+    <body>
+        <include file="./Application/Admin/View/public/v_nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+
+                    <!--/.span3-->
+                    <div class="span9" style="width: 80%; margin-left: 10%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>开通VIP</h3>
+							</div>
+							<div class="module-body table">
+                                <empty name="data">
+                                    <h3 style="text-align: center"><span style="color: #0e90d2">请输入一个玩家ID！</span></h3>
+                                    <else/>
+                                    <h3 style="text-align: center">玩家【<span style="color: #0e90d2">{$data[0].nickname}</span>】</h3>
+                                </empty>
+
+
+
+                                <form method="get" class="form-horizontal row-fluid" action="__APP__/Admin/User/only_v" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        玩家ID：
+                                        <input type="number" name="userid"  style="width:150px;height:25px;"/>
+
+                                        <input type="submit" class="btn btn-default btn-info godate" value="搜索玩家"/>
+                                    </div><br>
+
+
+
+                                    <div class="control-group">
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+                                        <table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%" style="table-layout: fixed">
+                                            <tr>
+                                                <td><span><b>游戏推广号：</b>  {$data[0].gameid}  </span></td>
+                                                <td><span><b>游戏昵称：</b>  {$data[0].nickname}  </span></td>
+                                                <td><span><b>玩家ID：</b>  {$data[0].userid}  </span></td>
+                                                <td><span><b>账号类型：</b>
+                                                    <notempty name="data">
+                                                <if condition = "$data[0][usertype] eq 4">
+                                                <span style="color: red">VIP</span>
+                                                </if>
+                                                <if condition = "$data[0][usertype] eq 0">
+                                                <span>普通玩家</span>
+                                                </if>
+                                                <else/>
+                                                --
+                                            </notempty>  </span></td>
+                                            </tr>
+
+
+                                        </table>
+
+                                    </div>
+
+                                </form>
+
+                                <hr>
+
+
+                                <notempty name="data">
+                                <a class="btn btn-large btn-primary player_button" href="javascript:0" id="type_change" style="margin-left: 20px">修改玩家类型</a>
+                                </notempty>
+
+
+
+                                    </div>
+
+
+
+							</div>
+
+
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+
+
+
+        <!--修改玩家类型-->
+        <div class="change_type_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/only_v_change" name="go_change_type">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>修改玩家类型</h3>
+
+
+                    <label class="radio-inline">
+                        <b>玩家ID： <span style="color: red;">{$data[0].userid}</span></b>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>玩家类型：</b>
+                        <select name="usertype">
+
+
+                            <if condition = "$data[0][usertype] eq '4'">
+                                <option value="4"  selected = "selected">VIP</option>
+                                <option value="0">普通玩家</option>
+                                <else/>
+                                <option value="4">VIP</option>
+                                <option value="0" selected = "selected">普通玩家</option>
+                            </if>
+
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>操作原因：</b>
+                        <textarea name="change_remark"></textarea>
+                    </label>
+
+                    <br>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_change_type">修改</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+
+                $('#add_insure').click(function () {
+                    $('.insure_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#add_gold').click(function () {
+                    $('.gold_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#user_ctr').click(function () {
+                    $('.ctr_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#user_lock').click(function () {
+                    $('.lock_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#deal_lock').click(function () {
+                    $('.deal_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#type_change').click(function () {
+                    $('.change_type_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#remark_change').click(function () {
+                    $('.remark_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sglb').click(function () {
+                    $('.sglb_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sjdz').click(function () {
+                    $('.sjdz_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#zlj').click(function () {
+                    $('.zlj_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dsx').click(function () {
+                    $('.dsx_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dx23').click(function () {
+                    $('.dx23_tip').fadeIn(200).animate({top:'30%'},270);
+                    //$('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#dx45').click(function () {
+                    $('.dx45_tip').fadeIn(200).animate({top:'30%'},270);
+                    //$('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#mysm').click(function () {
+                    $('.mysm_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#mla').click(function () {
+                    $('.mla_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#wflm').click(function () {
+                    $('.wflm_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#e21').click(function () {
+                    $('.e21_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#by2d').click(function () {
+                    $('.by2d_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sglhj').click(function () {
+                    $('.sglhj_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#xar').click(function () {
+                    $('.xar_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#bs').click(function () {
+                    $('.bs_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#sgml').click(function () {
+                    $('.sgml_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+                $('#pwd_change').click(function () {
+                    $('.pwd_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+
+
+                $('.cls_tip').click(function () {
+                    $('.insure_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.pwd_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.wflm_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.mla_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.gold_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sglb_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sjdz_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.zlj_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.mysm_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.e21_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.by2d_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sglhj_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.xar_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.bs_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.sgml_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.dsx_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.dx23_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.dx45_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.remark_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.lock_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.deal_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.change_type_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.ctr_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.wrapper').animate({opacity:'1'},300);
+
+                    $(".ts").hide(80)
+                })
+
+                $('.go_pwd').click(function () {
+                    var pwd = $('input[name="player_pwd"]').val();
+                    if(typeof (pwd) == 'undefined' || pwd == null || pwd==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入新密码");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_pwd"]').submit();
+                    }
+                })
+
+                $('.do_ctr').click(function () {
+                    var cheat = $('input[name="cheat"]').val();
+                    if(cheat>10000 || cheat<-10000){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("作弊率范围为-10000~10000");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="user_ctr"]').submit();
+                    }
+                })
+
+                //锁定玩家
+                $('.go_lock').click(function () {
+                    var remark = $('textarea[name="lock_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_lock"]').submit();
+                    }
+                })
+
+                //禁止交易
+                $('.go_bandeal').click(function () {
+                    var remark = $('textarea[name="deal_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_bandeal"]').submit();
+                    }
+                })
+
+                //修改玩家类型
+                $('.go_change_type').click(function () {
+                    var remark = $('textarea[name="change_remark"]').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入操作原因");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_change_type"]').submit();
+                    }
+                })
+
+                //修改玩家备注
+                $('.go_remark').click(function () {
+
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("修改成功！");
+                        $('form[name="go_remark"]').submit();
+
+                })
+
+
+                //水果拉霸
+                $('.go_sglb').click(function () {
+                    var remark = $('#sglb_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sglb"]').submit();
+                    }
+                })
+
+                //世界大战
+                $('.go_sjdz').click(function () {
+                    var remark = $('#sjdz_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sjdz"]').submit();
+                    }
+                })
+
+
+                //侏罗纪
+                $('.go_zlj').click(function () {
+                    var remark = $('#zlj_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_zlj"]').submit();
+                    }
+                })
+
+                //玛雅
+                $('.go_mysm').click(function () {
+                    var remark = $('#mysm_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_mysm"]').submit();
+                    }
+                })
+
+                //大四喜
+                $('.go_dsx').click(function () {
+                    var remark = $('#dsx_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_dsx"]').submit();
+                    }
+                })
+
+
+                //五福临门
+                $('.go_wflm').click(function () {
+                    var remark = $('#wflm_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_wflm"]').submit();
+                    }
+                })
+
+                //21点
+                $('.go_e21').click(function () {
+                    var remark = $('#e21_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_e21"]').submit();
+                    }
+                })
+
+                //2d捕鱼
+                $('.go_by2d').click(function () {
+                    var remark = $('#by2d_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_by2d"]').submit();
+                    }
+                })
+
+                //水果老虎机
+                $('.go_sglhj').click(function () {
+                    var remark = $('#sglhj_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sglhj"]').submit();
+                    }
+                })
+
+                //小矮人
+                $('.go_xar').click(function () {
+                    var remark = $('#xar_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_xar"]').submit();
+                    }
+                })
+
+                //博士
+                $('.go_bs').click(function () {
+                    var remark = $('#bs_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_bs"]').submit();
+                    }
+                })
+
+                //水果玛丽
+                $('.go_sgml').click(function () {
+                    var remark = $('#sgml_gold').val();
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_sgml"]').submit();
+                    }
+                })
+
+                //23滴血
+                $('.go_dx23').click(function () {
+
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        //$(".tip").text("添加成功！");
+                        //$('form[name="go_dx23"]').submit();
+
+                })
+
+                //45滴血
+                $('.go_dx45').click(function () {
+                    var remark = $('.dx45_gold').val();
+
+
+                    if(typeof (remark) == 'undefined' || remark == null || remark==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入添加金币");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="go_dx45"]').submit();
+                    }
+                })
+
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+
+      
+    </body>

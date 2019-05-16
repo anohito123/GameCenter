@@ -1,0 +1,82 @@
+<include file="./Application/Admin/View/public/header.html" title="登录记录" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>登录记录</h3>
+							</div>
+							<div class="module-body table">
+                                <form method="get" action="__URL__/player_login_log" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        玩家ID：
+                                        <input type="number" name="userid"  style="width:150px;height:25px;"/>
+
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="搜索玩家"/>
+                                    </div>
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%">
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                                            <th>昵称</th>
+											<th>登录房间</th>
+                                            <th>登录时间</th>
+
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <notempty name="data">
+                                    <foreach name="data" item="vo">                                    <tr >
+
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.nick_name}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            <td>{$vo.nick_name}</td>
+                                        </if>
+
+
+                                        <td>{$vo.room_name}</td>
+                                        <td>{$vo.entertime}</td>
+
+
+
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="6">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

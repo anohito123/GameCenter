@@ -1,0 +1,133 @@
+<include file="./Application/Admin/View/public/header.html" title="玩家保护列表" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>玩家保护列表</h3>
+							</div>
+							<div class="module-body table">
+                                <form method="get" action="__URL__/player_list" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        <input type="hidden" name="protect_list" value="1" />
+                                        玩家ID：
+                                        <input type="number" name="userid"  style="width:150px;height:25px;" placeholder=""/>
+
+                                        <select name="pid">
+                                            <option value="1">类型1</option>
+                                            <option value="2">类型2</option>
+                                            <option value="3">类型3</option>
+                                            <option value="4">类型4</option>
+                                        </select>
+
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="搜索玩家"/>
+                                    </div>
+                                </form>
+<div style="margin-left: 15px">
+                                说明：<br>
+                                类型0 普通玩家<br>
+    <span style="color: red">类型1（第一次买分3天内），买分超过30w，输钱超过20w的玩家</span><br>
+    <span style="color: #5daf34">类型2（第一次买分7天内），买分超过90w，输钱超过40w的玩家</span><br>
+    <span style="color: #3a8ee6"> 类型3（第一次买分10天内），买分超过200w，输钱超过90w的玩家</span><br>
+    <span style="color: orange">  类型4 买分超过50w且从未下分，最近10天有登陆的玩家</span><br><br>
+</div>
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered  display" width="100%">
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                                            <th>昵称</th>
+											<th>最后登录时间</th>
+                                            <th>注册时间</th>
+                                            <th>类型</th>
+                                            <th>当日输赢</th>
+                                            <th>金币</th>
+                                            <th>保险柜金币</th>
+                                            <th>总接收</th>
+                                            <th>总赠送</th>
+                                            <th>顺差</th>
+                                            <th>总输赢</th>
+                                            <th>保护类型</th>
+
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <notempty name="data">
+                                    <foreach name="data" item="vo">
+                                        <if condition="$vo.cheat gt 0">
+                                        <tr style="background-color: #c8c9cc">
+                                    </if>
+
+                                        <if condition="$vo.cheat lt 0">
+                                            <tr style="background-color: #9bf99a">
+                                        </if>
+
+                                        <if condition="$vo.cheat eq 0">
+                                            <tr>
+                                        </if>
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.nickname}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            <td>{$vo.nickname}</td>
+                                        </if>
+
+
+                                        <td>{$vo.lastlogintime}</td>
+                                        <td>{$vo.registerdate}</td>
+                                        <td>
+                                        <if condition = "$vo.usertype eq 4">
+                                            VIP
+                                            <else/>普通玩家
+
+                                        </if>
+                                        </td>
+                                        <td>{$vo.today_win}</td>
+                                        <td>{$vo.sum_gold}</td>
+                                        <td>{$vo.insure_gold}</td>
+                                        <td>{$vo.received_sum}</td>
+                                        <td>{$vo.present_sum}</td>
+                                        <td>{$vo.ab}</td>
+                                        <td>{$vo.log_win}</td>
+
+                                        <if condition="$vo.protectid eq 1"><td style="background: red; color: #ffffff; text-align: center">类型1</td></if>
+                                        <if condition="$vo.protectid eq 2"><td style="background: #5daf34; color: #ffffff; text-align: center">类型2</td></if>
+                                        <if condition="$vo.protectid eq 3"><td style="background: #3a8ee6; color: #ffffff; text-align: center">类型3</td></if>
+                                        <if condition="$vo.protectid eq 4"><td style="background: orange; color: #ffffff;text-align: center">类型4</td></if>
+
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="13">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

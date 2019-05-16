@@ -1,0 +1,182 @@
+<include file="./Application/Admin/View/public/header.html" title="编辑公告" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 30%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>编辑公告</h3>
+							</div>
+							<div class="module-body table" >
+                                <form class="form-horizontal row-fluid" method="post" action="__URL__/save_notice" name="do_update">
+
+                                    <div class="control-group" >
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+
+
+                                    </div>
+                                    <input type="hidden" name="id" value="{$data.id}"/>
+                                    <div class="control-group">
+                                        <label class="control-label" >标题: &nbsp;&nbsp;</label>
+                                        <input type="text" name="title" value="{$data.title}"/>
+
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" >内容: &nbsp;&nbsp;</label>
+
+                                        <textarea type="text" name="content">{$data.content}</textarea>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" >序号: &nbsp;&nbsp;</label>
+
+                                        <input type="number" name="index" value="{$data.index}" />
+                                    </div>
+
+
+
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input type="submit" value="修改公告" class="btn btn-mini btn-info" id="do_update"/>
+
+
+                                        </div>
+                                    </div>
+                                </form>
+
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+
+
+        <!--添加-->
+        <div class="add_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/add_notice" name="notice">
+
+                <input type="hidden" value="{$data[0].userid}" name="userid"/>
+
+                <div class="control-group">
+
+                    <h3>添加公告</h3>
+
+
+                    <label class="radio-inline">
+                        <b>标题：</b>
+                        <input type="text" name="title" id="title"/>
+                    </label><br>
+
+                    <label class="radio-inline" >
+                        <b>内容：</b>
+                       <textarea name="content" id="content"></textarea>
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" class="btn btn-mini btn-info go_add">添加</button> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+                $('#add_notice').click(function () {
+                    $('.add_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('.cls_tip').click(function () {
+                    $('.add_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.wrapper').animate({opacity:'1'},300);
+
+                    $(".ts").hide(80)
+                })
+
+                $('.delete').click(function () {
+
+                    if(confirm("确认删除公告？")){
+                        return true
+                    }else {
+                        return false
+                    }
+                })
+
+
+
+                $('.go_add').click(function () {
+                    var title = $('#title').val();
+                    var content = $('#content').val();
+
+                    if(typeof (title) == 'undefined' || title == null || title=='' || typeof (content) == 'undefined' || content == null || content==''){
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-success');
+                        $(".ts").addClass('alert-error');
+                        $(".tip").text("请输入标题或内容！");
+                    }else{
+                        $(".ts").show(80);
+                        $(".ts").removeClass('alert-error');
+                        $(".ts").addClass('alert-success');
+                        $(".tip").text("添加成功！");
+                        $('form[name="notice"]').submit();
+                    }
+                })
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

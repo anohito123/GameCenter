@@ -1,0 +1,410 @@
+<include file="./Application/Admin/View/public/header.html" title="玩家列表" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>玩家列表</h3>
+							</div>
+							<div class="module-body table">
+                                <form method="get" action="__URL__/player_list" name="player_list" class="form-horizontal row-fluid" >
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >玩家ID:</label>
+                                            <div class="controls">
+                                                <input style="width: 200px;"  type="number"  data-original-title="" class="span8 tip"  name="userid" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >昵称:</label>
+                                            <div class="controls">
+                                                <input style="width: 200px" type="text"  data-original-title="" class="span8 tip"  name="nick" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >手机号:</label>
+                                            <div class="controls">
+                                                <input style="width: 200px" type="text"  data-original-title="" class="span8 tip"  name="phone" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >最后登录IP:</label>
+                                            <div class="controls">
+                                                <input style="width: 200px" type="text"  data-original-title="" class="span8 tip"  name="lastip" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >机器码:</label>
+                                            <div class="controls">
+                                                <input style="width: 200px" type="text"  data-original-title="" class="span8 tip"  name="machineid" >
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >总买分:</label>
+                                            <div class="controls">
+                                                <input type="number" name="minbuy"  style="width:100px;"  /> -
+                                                <input type="number" name="maxbuy"  style="width:100px;" />
+                                                <a href="__URL__/get_buy_zero">接收为0的玩家</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >总输赢:</label>
+                                            <div class="controls">
+                                                <input type="number" name="minwin"  style="width:100px;"  /> -
+                                                <input type="number" name="maxwin"  style="width:100px;" />
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >最后登录时间:</label>
+                                            <div class="controls">
+                                                <input type="text" name="logintime1"  style="width:100px;" id="ECalendar_case1" /> -
+                                                <input type="text" name="logintime2"  style="width:100px;" id="ECalendar_case2"	/>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >注册时间:</label>
+                                            <div class="controls">
+                                                <input type="text" name="regtime1"  style="width:100px;" id="ECalendar_case3" /> -
+                                                <input type="text" name="regtime2"  style="width:100px;" id="ECalendar_case4"	/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >玩家类型:</label>
+                                            <div class="controls">
+
+                                                <select name="viplevel">
+
+                                                    <if condition="$Think.get.viplevel eq 'pt'">
+                                                        <option value="0">未选择</option>
+                                                        <option value="pt" selected>普通玩家</option>
+                                                        <option value="4">VIP</option>
+                                                    </if>
+
+                                                    <if condition="$Think.get.viplevel eq '4'">
+                                                        <option value="0">未选择</option>
+                                                        <option value="pt">普通玩家</option>
+                                                        <option value="4" selected>VIP</option>
+                                                    </if>
+
+                                                    <if condition="$Think.get.viplevel eq 0">
+                                                        <option value="0">未选择</option>
+                                                        <option value="pt">普通玩家</option>
+                                                        <option value="4">VIP</option>
+                                                    </if>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >玩家平台:</label>
+                                            <div class="controls">
+
+                                                <select name="plat">
+                                                    <if condition="$Think.get.plat eq 1">
+                                                        <option value="0">未选择</option>
+                                                        <option value="1" selected>苹果</option>
+                                                        <option value="2">安卓</option>
+                                                        <option value="3">PC</option>
+                                                    </if>
+
+                                                    <if condition="$Think.get.plat eq 2">
+                                                        <option value="0">未选择</option>
+                                                        <option value="1" >苹果</option>
+                                                        <option value="2" selected>安卓</option>
+                                                        <option value="3">PC</option>
+                                                    </if>
+
+                                                    <if condition="$Think.get.plat eq 3">
+                                                        <option value="0">未选择</option>
+                                                        <option value="1" >苹果</option>
+                                                        <option value="2" >安卓</option>
+                                                        <option value="3" selected>PC</option>
+                                                    </if>
+
+                                                    <if condition="$Think.get.plat eq ''">
+                                                        <option value="0">未选择</option>
+                                                        <option value="1">苹果</option>
+                                                        <option value="2">安卓</option>
+                                                        <option value="3">PC</option>
+                                                    </if>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >排序字段:</label>
+                                            <div class="controls">
+
+                                                <select name="sort">
+                                                    <if condition="$Think.session.sort eq 1">
+                                                        <option value="1" selected="selected">玩家ID</option>
+                                                        <option value="2">注册时间</option>
+                                                        <option value="3">当日输赢</option>
+                                                        <option value="4">总输赢</option>
+                                                        <option value="5">金币</option>
+
+                                                    </if>
+                                                    <if condition="$Think.session.sort eq 2">
+                                                        <option value="1" >玩家ID</option>
+                                                        <option value="2" selected="selected">注册时间</option>
+                                                        <option value="3">当日输赢</option>
+                                                        <option value="4">总输赢</option>
+                                                        <option value="5">金币</option>
+
+                                                    </if>
+                                                    <if condition="$Think.session.sort eq 3">
+                                                        <option value="1" >玩家ID</option>
+                                                        <option value="2" >注册时间</option>
+                                                        <option value="3" selected="selected">当日输赢</option>
+                                                        <option value="4">总输赢</option>
+                                                        <option value="5">金币</option>
+
+                                                    </if>
+                                                    <if condition="$Think.session.sort eq 4">
+                                                        <option value="1" >玩家ID</option>
+                                                        <option value="2" >注册时间</option>
+                                                        <option value="3">当日输赢</option>
+                                                        <option value="4"  selected="selected">总输赢</option>
+                                                        <option value="5">金币</option>
+
+                                                    </if>
+                                                    <if condition="$Think.session.sort eq 5">
+                                                        <option value="1" >玩家ID</option>
+                                                        <option value="2" >注册时间</option>
+                                                        <option value="3">当日输赢</option>
+                                                        <option value="4" >总输赢</option>
+                                                        <option value="5"  selected="selected">金币</option>
+
+                                                    </if>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="control-group" style="margin-left: -50px">
+                                            <label class="control-label" >升序/降序:</label>
+                                            <div class="controls">
+
+                                                <select name="sign">
+
+                                                    <if condition="$Think.session.sort eq 2">
+                                                        <option value="1" >升序</option>
+                                                        <option value="2"  selected="selected">降序</option>
+                                                        <else/>
+                                                        <option value="1"  selected="selected">升序</option>
+                                                        <option value="2" >降序</option>
+                                                    </if>
+
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!--<div class="control-group" style="margin-left: -50px">-->
+                                            <!--<label class="control-label" >显示条数:</label>-->
+                                            <!--<div class="controls">-->
+                                                <!--<if condition="$Think.session.plpage eq 30">-->
+                                                    <!--<input type="radio" style="margin: 5px" name="page_count" value="30" checked="checked" >-->
+                                                    <!--<span style="color:dodgerblue; font-weight: bolder">30条</span>-->
+                                                    <!--<else/>-->
+                                                    <!--<input type="radio" style="margin: 5px" name="page_count" value="30">30条-->
+                                                <!--</if>-->
+
+                                                <!--<if condition="$Think.session.plpage eq 50">-->
+                                                    <!--<input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="50" checked="checked">-->
+                                                    <!--<span style="color:dodgerblue;font-weight: bolder">50条</span>-->
+                                                    <!--<else/>-->
+                                                    <!--<input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="50" >50条-->
+                                                <!--</if>-->
+
+                                                <!--<if condition="$Think.session.plpage eq 100">-->
+                                                    <!--<input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="100" checked="checked">-->
+                                                    <!--<span style="color:dodgerblue;font-weight: bolder">100条</span>-->
+                                                    <!--<else/>-->
+                                                    <!--<input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="page_count" value="100" >100条-->
+                                                <!--</if>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+
+
+
+
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="搜索玩家"/><br>
+                                    </div>
+
+
+
+
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%">
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                                            <th>昵称</th>
+											<th>最后登录时间</th>
+                                            <th>注册时间</th>
+                                            <th>类型</th>
+                                            <th>当日输赢</th>
+                                            <th>总输赢</th>
+
+
+                                            <th>金币</th>
+                                            <th>保险柜金币</th>
+                                            <th>总赠送VIP</th>
+                                            <th>总赠送玩家</th>
+                                            <th>总接收VIP</th>
+                                            <th>总接收玩家</th>
+
+
+                                            <th>顺差</th>
+
+                                            <th>首选游戏</th>
+                                            <th>平台</th>
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <notempty name="data">
+                                    <foreach name="data" item="vo">                                    <tr >
+
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?userid={$vo.userid}">{$vo.userid}</a></td>
+                                            <td><a href="__URL__/player_list?userid={$vo.userid}">{$vo.nickname}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            <td>{$vo.nickname}</td>
+                                        </if>
+
+                                        <td>{$vo.lastlogindate}</td>
+                                        <td>{$vo.registerdate}</td>
+                                        <td>
+                                        <if condition = "$vo.usertype eq 4">
+                                            VIP
+                                            <else/>普通玩家
+
+                                        </if>
+                                        </td>
+                                        <td>{$vo.daywinlose}</td>
+                                        <td>{$vo.totalwinlose}</td>
+                                        <td>{$vo.score}</td>
+                                        <td>{$vo.insurescore}</td>
+                                        <td>{$vo.transoutvip}</td>
+                                        <td>{$vo.transoutnormal}</td>
+                                        <td>{$vo.transinvip}</td>
+                                        <td>{$vo.transinnormal}</td>
+
+                                        <td>{$vo.ab}</td>
+
+                                        <td>{$vo.first_room}</td>
+                                        <td><if condition = "$vo.platformid eq 1">
+                                            苹果
+                                        </if>
+                                            <if condition = "$vo.platformid eq 2">
+                                                安卓
+                                            </if>
+                                            <if condition = "$vo.platformid eq 3">
+                                                PC
+                                            </if>
+
+                                        </td>
+
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="13">没有数据，请输入一个玩家ID！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table><br>
+                                    <div style="float: right;padding: 5px">
+                                        <a href="javascript:0" id="up">上一页</a>
+                                    <a href="javascript:0" id="next">下一页>></a>
+
+                                    <input type="submit" class="btn btn-mini btn-info godate" value="跳转到"/>第
+                                    <input type="number" name="current_page" value="{$Think.session.current_page}" style="width:50px"/>
+                                    页 / 共{$page[sum_page]}页
+                                    </div>
+
+                                </form>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script type="text/javascript">
+
+            $('#up').click(function () {
+                upval = $("input[ name='current_page']").val()
+                $("input[ name='current_page']").val(Number(upval)-1)
+                $("form[name='player_list']").submit();
+
+            })
+            $('#next').click(function () {
+                upval = $("input[ name='current_page']").val()
+                $("input[ name='current_page']").val(Number(upval)+1)
+                $("form[name='player_list']").submit();
+
+            })
+            
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    
+
+
+</body>

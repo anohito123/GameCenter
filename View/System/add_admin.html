@@ -1,0 +1,155 @@
+<include file="./Application/Admin/View/public/header.html" title="添加管理员" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>添加管理员</h3>
+							</div>
+							<div class="module-body table">
+
+                                <form class="form-horizontal row-fluid" method="post" action="__URL__/go_add_admin">
+
+                                    <div class="control-group" >
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+
+
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" >账号: &nbsp;&nbsp;</label>
+                                        <input type="text" name="admin" placeholder="请输入管理员账号"/>
+
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" >密码: &nbsp;&nbsp;</label>
+
+                                        <input type="password" name="pwd1"  placeholder="请输入密码"/>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" >确认密码: &nbsp;&nbsp;</label>
+
+                                        <input type="password" name="pwd" placeholder="确认密码"/>
+                                    </div>
+
+                                    <div class="control-group" style="margin-left: 20px">
+                                        <label  style="color: red">注：名称前缀为‘kv’开头的账号，将只具备开V功能（如‘kv001’）</label>
+
+                                        <hr><h4>系统管理：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="adminList" value="1" checked="checked"/>管理员列表
+                                        <input style="margin-left: 10px" type="checkbox" name="loginLog" value="1" checked="checked"/>登录记录
+                                        <input style="margin-left: 10px" type="checkbox" name="goldLog" value="1" checked="checked"/>添加金币记录
+                                        <input style="margin-left: 10px" type="checkbox" name="lockLog" value="1" checked="checked"/>锁定玩家记录
+                                        <input style="margin-left: 10px" type="checkbox" name="ban_deal_log" value="1" checked="checked"/>禁止交易记录
+                                        <input style="margin-left: 10px" type="checkbox" name="usertype_log" value="1" checked="checked"/>修改玩家类型记录
+                                        <input style="margin-left: 10px" type="checkbox" name="pool_log" value="1" checked="checked"/>添加奖池金币记录
+                                        <input style="margin-left: 10px" type="checkbox" name="controllerLog" value="1" checked="checked"/>管理员点控记录
+                                        <input style="margin-left: 10px" type="checkbox" name="card_log" value="1" checked="checked"/>点卡生成记录
+                                        <input style="margin-left: 10px" type="checkbox" name="room" value="1" checked="checked"/>房间配置
+                                        <input style="margin-left: 10px" type="checkbox" name="room_out_in" value="1" checked="checked"/>房间吞吐率
+                                        <input style="margin-left: 10px" type="checkbox" name="notice_log" value="1" checked="checked"/>公告管理
+                                        <input style="margin-left: 10px" type="checkbox" name="platform" value="1" checked="checked"/>平台明细
+                                        <input style="margin-left: 10px" type="checkbox" name="platform_all_log" value="1" checked="checked"/>平台总汇
+
+                                        <hr><h4>玩家管理：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="lot_ban_deal" value="1" checked="checked"/>批量禁止交易操作
+                                        <input style="margin-left: 10px" type="checkbox" name="add_user" value="1" checked="checked"/>玩家注册
+                                        <input style="margin-left: 10px" type="checkbox" name="searach" value="1" checked="checked"/>玩家列表
+                                        <input style="margin-left: 10px" type="checkbox" name="onlineList" value="1" checked="checked"/>在线列表
+                                        <input style="margin-left: 10px" type="checkbox" name="tradeList" value="1" checked="checked"/>交易列表
+                                        <input style="margin-left: 10px" type="checkbox" name="protect_list" value="1" checked="checked"/>保护列表
+                                        <input style="margin-left: 10px" type="checkbox" name="pt_ctr" value="1" checked="checked"/>保护控制
+                                        <input style="margin-left: 10px" type="checkbox" name="message" value="1" checked="checked"/>留言列表
+                                        <input style="margin-left: 10px" type="checkbox" name="user_login" value="1" checked="checked"/>登录记录
+                                        <input style="margin-left: 10px" type="checkbox" name="all_pr" value="1" checked="checked"/>转账记录
+                                        <input style="margin-left: 10px" type="checkbox" name="p_log" value="1" checked="checked"/>赠送记录
+                                        <input style="margin-left: 10px" type="checkbox" name="r_log" value="1" checked="checked"/>接收记录
+                                        <input style="margin-left: 10px" type="checkbox" name="goldChange" value="1" checked="checked"/>金币变动记录
+                                        <input style="margin-left: 10px" type="checkbox" name="sumgGoldChange" value="1" checked="checked"/>总金币变动记录
+                                        <input style="margin-left: 10px" type="checkbox" name="winList" value="1" checked="checked"/>输赢记录
+                                        <hr><h4>VIP管理：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="vipList" value="1" checked="checked"/>VIP列表
+                                        <hr><h4>图表数据：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_online" value="1" checked="checked"/>在线图表
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_online1" value="1" checked="checked"/>在线图表（仅房间）
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_reg" value="1" checked="checked"/>注册图表
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_active" value="1" checked="checked"/>活跃图表
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_room" value="1" checked="checked"/>血池图表
+                                        <input style="margin-left: 10px" type="checkbox" name="gp_alive" value="1" checked="checked"/>留存图表
+
+                                        <hr><h4>点卡管理：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_card_list" value="1" checked="checked"/>点卡列表
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_card_add" value="1" checked="checked"/>生成点卡
+                                        <hr><h4>玩家详情 - 数据操作</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_addgold" value="1" checked="checked"/>添加金币
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_add_insure" value="1" checked="checked"/>添加保险柜金币
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_ctr" value="1" checked="checked"/>点控玩家
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_ctr_add" value="1" checked="checked"/>点控玩家(仅允许正点控)
+
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_lock" value="1" checked="checked"/>锁定/解锁玩家
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_ban_deal" value="1" checked="checked"/>禁止/允许交易
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_usertype" value="1" checked="checked"/>修改玩家类型
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_remark" value="1" checked="checked"/>修改玩家备注
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_pwd_change" value="1" checked="checked"/>修改玩家密码
+
+                                        <hr><h4>玩家详情 - 添加奖池</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_sglb" value="1" checked="checked"/>水果拉霸
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_dsx" value="1" checked="checked"/>大四喜
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_21" value="1" checked="checked"/>21点
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_bs" value="1" checked="checked"/>博士
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_mla" value="1" checked="checked"/>马里奥
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_2dby" value="1" checked="checked"/>2D捕鱼
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_sglhj" value="1" checked="checked"/>水果老虎机
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_xar" value="1" checked="checked"/>小矮人
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_sgml" value="1" checked="checked"/>水果玛丽
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_cjsgml" value="1" checked="checked"/>水果玛丽
+
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_dx2" value="1" checked="checked"/>滴血2
+
+                                        <hr><h4>其他：</h4>
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_phone" value="1" checked="checked"/>显示玩家手机号
+                                        <input style="margin-left: 10px" type="checkbox" name="link_user" value="1" checked="checked"/>跳转玩家详情
+                                        <input style="margin-left: 10px" type="checkbox" name="ud_roll_back" value="1" checked="checked"/>转账撤回
+
+                                    </div>
+
+
+
+
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input type="submit" value="添加" class="btn btn-mini btn-info" id="do_pwd"/>
+                                        </div>
+                                    </div>
+                                </form>
+
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

@@ -1,0 +1,150 @@
+<include file="./Application/Admin/View/public/header.html" title="与vip交易列表" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>与vip交易列表</h3>
+							</div>
+							<div class="module-body table" style="overflow: auto">
+								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%" style="overflow: auto">
+									<thead>
+										<tr style="overflow: auto">
+											<th>玩家ID</th>
+                                            <th>昵称</th>
+                                            <th>备注</th>
+                                            <th>当前房间</th>
+                                            <th>在线状态</th>
+                                            <th>总输赢</th>
+                                            <th>当日输赢</th>
+                                            <th>总买分</th>
+                                            <th>总下分</th>
+                                            <th>总顺差</th>
+                                            <th>今日总买分</th>
+                                            <th>今日总下分</th>
+                                            <th>今日总顺差</th>
+                                            <th>总金币</th>
+                                            <th>保险柜金币</th>
+                                            <th>最近兑换卡时间</th>
+                                            <th>兑换总数</th>
+                                            <th>近1次买分</th>
+                                            <th>近2次买分</th>
+                                            <th>近3次买分</th>
+                                            <th>近1次下分</th>
+                                            <th>近2次下分</th>
+                                            <th>近3次下分</th>
+                                            <th>作弊率</th>
+                                            <th>作弊限额</th>
+                                            <th>剩余金币</th>
+                                            <th>作弊完成时间</th>
+                                            <th>类型</th>
+                                            <th>注册时间</th>
+
+
+
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <foreach name="data" item="vo">
+                                        <tr >
+                                        <td><a href="__APP__/Admin/User/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                        <td><a href="__APP__/Admin/User/player_list?detail_id={$vo.userid}">{$vo.nickname}</a></td>
+                                            <td>{$vo.remark}</td>
+                                            <td>{$vo.current_room}</td>
+                                            <if condition = "$vo.current_room eq '--'">
+                                            <td>否</td>
+                                                <else/>
+                                                <td>是</td>
+                                            </if>
+                                            <td>{$vo.log_win}</td>
+                                            <td>{$vo.today_win}</td>
+                                            <td>{$vo.received_sum}</td>
+                                            <td>{$vo.present_sum}</td>
+                                            <td>{$vo.sum_ab}</td>
+                                            <td>{$vo.today_r_sum}</td>
+                                            <td>{$vo.today_p_sum}</td>
+                                            <td>{$vo.today_ab}</td>
+                                            <td>{$vo.sum_gold}</td>
+                                            <td>{$vo.insure_gold}</td>
+
+                                            <td>{$vo.ex_date}</td>
+                                            <td>{$vo.ex_count}</td>
+                                            <td>{$vo.deal1_r_date}/{$vo.deal1_r_score}</td>
+                                            <td>{$vo.deal2_r_date}/{$vo.deal2_r_score}</td>
+                                            <td>{$vo.deal3_r_date}/{$vo.deal3_r_score}</td>
+
+                                            <td>{$vo.deal1_p_date}/{$vo.deal1_p_score}</td>
+                                            <td>{$vo.deal2_p_date}/{$vo.deal2_p_score}</td>
+                                            <td>{$vo.deal3_p_date}/{$vo.deal3_p_score}</td>
+
+                                            <td>{$vo.cheat}</td>
+                                            <td>{$vo.limit}</td>
+                                            <td>{$vo.sp}</td>
+                                            <td>{$vo.endcheatdate}</td>
+                                            <td>{$vo.usertype}</td>
+                                            <td>{$vo.registerdate}</td>
+                                        </tr>
+                                    </foreach>
+										
+										
+									</tbody>
+									
+								</table>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+
+
+                $('.delete').click(function () {
+
+                    if(confirm("确认删除该管理员？")){
+                        return true
+                    }else {
+                        return false
+                    }
+                })
+
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

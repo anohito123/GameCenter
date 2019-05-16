@@ -1,0 +1,206 @@
+<include file="./Application/Admin/View/public/header.html" title="平台总汇" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>平台总汇</h3>
+							</div>
+							<div class="module-body table">
+
+
+                                <div style="margin-left: 20px;">
+                                    <h2>注册情况</h2>
+                                <span style="padding-right: 55px;font-size: 15px">总注册：<span style="color: red;font-weight: bolder">{$data.all_reg}</span></span>
+                                <span style="padding-right: 55px;font-size: 15px">IOS：<span style="color: red;font-weight: bolder">{$data.all_ios}</span></span>
+                                <span style="padding-right: 55px;font-size: 15px">安卓：<span style="color: red;font-weight: bolder">{$data.all_adr}</span></span>
+                                <span style="padding-right: 55px;font-size: 15px">PC：<span style="color: red;font-weight: bolder">{$data.all_pc}</span></span>
+                                <span style="padding-right: 55px;font-size: 15px">今日注册：<span style="color: red;font-weight: bolder">{$data.today_reg}</span></span><br><br>
+
+
+<h2>登录情况</h2>
+                                    <span style="padding-right: 55px; font-size: 15px">总登录：<span style="color: red;font-weight: bolder">{$data.all_login}</span></span>
+                                    <span style="padding-right: 55px; font-size: 15px">今日登录：<span style="color: red;font-weight: bolder">{$data.today_login}</span></span>
+                                    <span style="padding-right: 55px; font-size: 15px">当前在线：<span style="color: red;font-weight: bolder">{$data.online}</span></span>
+                                    <span style="padding-right: 55px; font-size: 15px">当日最高在线：<span style="color: red;font-weight: bolder">{$data.max_online}</span></span>
+                                    <span style="padding-right: 55px; font-size: 15px">历史最高在线：<span style="color: red;font-weight: bolder">{$data.max_all_online}</span></span>
+<br><br><br><br><br><br><br><br>
+
+                                </div>
+
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+
+        <!--修改房间血池-->
+        <div class="room_cheat_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_room_cheat" name="do_room_cheat">
+
+
+
+                <div class="control-group">
+
+                    <h3>修改房间血池</h3>
+
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <foreach name="data" item="vo">
+                                <option value="{$vo.serverid}" >{$vo.roomname}</option>
+                            </foreach>
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>修改血池：</b>
+                        <input type="number" name="cheat" placeholder="正数为添加，负数为减少"/>
+                    </label>
+
+
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="button" value="修改" class="btn btn-mini btn-info go_room_cheat"/> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <!--修改平衡值-->
+        <div class="room_balance_tip" style="width: 300px; text-align: left; display: none; position:fixed;top:0;left: 40%; background-color: #fff; padding: 30px; border: #999999 2px solid;">
+
+            <div class="alert ts" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>提示：</strong><span class="tip"></span>
+            </div>
+
+            <form class="form-horizontal row-fluid" method="post" action="__URL__/do_room_balance" name="do_room_balance">
+
+                <div class="control-group">
+
+                    <h3>修改房间平衡值</h3>
+
+                    <label class="radio-inline">
+                        <b>游戏房间：</b>
+                        <select name="roomid">
+                            <foreach name="data" item="vo">
+                                <option value="{$vo.serverid}" >{$vo.roomname}</option>
+                            </foreach>
+
+                        </select>
+                    </label><br>
+
+                    <label class="radio-inline">
+                        <b>修改平衡值：</b>
+                        <input type="number" name="balance" placeholder="正数为添加，负数为减少"/>
+                    </label>
+
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="button" value="修改" class="btn btn-mini btn-info go_room_balance"/> <button type="button" class="btn btn-mini cls_tip" >关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+                $('#room_cheat').click(function () {
+                    $('.room_cheat_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+                $('#room_balance').click(function () {
+                    $('.room_balance_tip').fadeIn(200).animate({top:'30%'},270);
+                    $('.wrapper').animate({opacity:'0.5'},300);
+                })
+
+
+
+                $('.cls_tip').click(function () {
+                    $('.room_cheat_tip').animate({top:'0'},300).fadeOut(200)
+                    $('.room_balance_tip').animate({top:'0'},300).fadeOut(200)
+
+                    $('.wrapper').animate({opacity:'1'},300);
+                    $(".ts").hide(80)
+                })
+
+
+                $('.go_room_cheat').click(function () {
+                    $(".ts").show(80);
+                    $(".ts").removeClass('alert-error');
+                    $(".ts").addClass('alert-success');
+                    $(".tip").text("修改成功！");
+                    $('form[name="do_room_cheat"]').submit();
+                })
+
+                $('.go_room_balance').click(function () {
+                    $(".ts").show(80);
+                    $(".ts").removeClass('alert-error');
+                    $(".ts").addClass('alert-success');
+                    $(".tip").text("修改成功！");
+                    $('form[name="do_room_balance"]').submit();
+                })
+
+
+
+
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

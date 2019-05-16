@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="600">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玩家在线列表</title>
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/css/theme.css" rel="stylesheet">
+
+    <link type="text/css" href="__PUBLIC__/admin/css/page.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/images/icons/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+          rel='stylesheet'>
+
+    <link rel="stylesheet" href="__PUBLIC__/admin/data/css/style.css" />
+
+    <style>
+        .ts{ display:none; }
+
+    </style>
+</head>
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%" >
+                        <div class="content">
+                        <div class="module" >
+							<div class="module-head">
+                                <h3>玩家在线列表</h3>
+							</div>
+							<div class="module-body table" style="overflow: auto">
+
+                                <form method="get" action="__URL__/player_list" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+
+                                        <input type="hidden" value="1" name="online_list"/>
+                                        房间名称：
+                                        <select name="roomname">
+                                            <option value="">请选择</option>
+                                            <option value="">--所有玩家--</option>
+                                            <option value="hall">-大厅-</option>
+                                            <option value="601">21点</option>
+                                            <option value="604">3D捕鱼</option>
+                                            <option value="611">2D捕鱼</option>
+                                            <option value="609">百人牛牛</option>
+                                            <option value="612">水果老虎机</option>
+                                            <option value="619">大四喜</option>
+                                            <option value="620">水果拉霸</option>
+                                            <option value="626">小矮人</option>
+                                            <option value="627">恐怖博士</option>
+                                            <option value="628">水果玛丽</option>
+                                            <option value="631">不朽浪漫</option>
+
+                                        </select>
+
+
+                                        玩家备注：
+                                        <input type="text" name="remark"   style="width:150px;height:25px;"/>
+
+                                        <!--排序：-->
+                                        <!--<select name="order">-->
+                                            <!--<option value="">请选择</option>-->
+                                            <!--<option value="gold">&#45;&#45;金币&#45;&#45;</option>-->
+                                            <!--<option value="igold">&#45;&#45;保险柜金币&#45;&#45;</option>-->
+                                            <!--<option value="pgold">&#45;&#45;总赠送&#45;&#45;</option>-->
+                                            <!--<option value="rgold">&#45;&#45;总接收&#45;&#45;</option>-->
+
+                                        <!--</select>-->
+
+
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="查询"/>
+
+                                        <span style="padding-left: 50px;font-size: 15px">房间人数：<span style="color: red;font-weight: bolder">{$count.search_count}</span></span>
+                                        <span style="padding-left: 50px;font-size: 15px">除去大厅人数：<span style="color: red;font-weight: bolder">{$count.hall_count}</span></span>
+                                        <span style="padding-left: 50px;font-size: 15px">玩家在线人数：<span style="color: red;font-weight: bolder">
+                                            <a href="__URL__/player_list?online_list1=1">{$count.player_count}</a>
+                                        </span></span>
+                                        <span style="padding-left: 50px;font-size: 15px">VIP在线人数：<span style="color: red;font-weight: bolder">
+                                            <a href="__URL__/player_list?online_list1=1&vip_count=1">{$count.vip_count}</a>
+                                        </span></span>
+                                        <span style="padding-left: 50px;font-size: 15px">总在线人数：<span style="color: red;font-weight: bolder">
+                                            <a href="__URL__/player_list?online_list1=1&sum_count=1">{$count.sum_count}</a>
+                                        </span></span>
+
+
+
+
+                                    </div>
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered  display" width="100%" style="padding: 2px" >
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                                            <th>备注</th>
+                                            <th>当前房间</th>
+                                            <th>总输赢</th>
+                                            <th>当日输赢</th>
+
+
+
+                                            <if condition="$Think.session.page eq 'vip_count'">
+                                                <th><a href="__URL__/player_list?sort=1&online_list1=1&vip_count=1&p={$Think.session.p}">金币</a></th>
+                                                <th><a href="__URL__/player_list?sort=2&online_list1=1&vip_count=1&p={$Think.session.p}">保险柜金币</a></th>
+                                                <th>上次买分ID</th>
+                                                <th><a href="__URL__/player_list?sort=5&online_list1=1&vip_count=1&p={$Think.session.p}">上次买分金额</a></th>
+
+                                                <elseif condition="$Think.session.page eq 'sum_count'" />
+
+                                                <th><a href="__URL__/player_list?sort=1&online_list1=1&sum_count=1&p={$Think.session.p}">金币</a></th>
+                                                <th><a href="__URL__/player_list?sort=2&online_list1=1&sum_count=1&p={$Think.session.p}">保险柜金币</a></th>
+                                                <th>上次买分ID</th>
+                                                <th><a href="__URL__/player_list?sort=5&online_list1=1&sum_count=1&p={$Think.session.p}">上次买分金额</a></th>
+
+                                                <else/>
+                                                <th><a href="__URL__/player_list?sort=1&online_list1=1&p={$Think.session.p}">金币</a></th>
+                                                <th><a href="__URL__/player_list?sort=2&online_list1=1&p={$Think.session.p}">保险柜金币</a></th>
+                                                <th>上次买分ID</th>
+                                                <th><a href="__URL__/player_list?sort=5&online_list1=1&p={$Think.session.p}">上次买分金额</a></th>
+
+                                            </if>
+                                            <th>备注</th>
+
+
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <notempty name="data">
+                                    <foreach name="data" item="vo">
+
+                                        <if condition="$vo.cheat gt 0">
+                                            <tr style="background-color: #c8c9cc">
+                                        </if>
+
+                                        <if condition="$vo.cheat lt 0">
+                                            <tr style="background-color: #9bf99a">
+                                        </if>
+
+                                        <if condition="$vo.cheat eq 0">
+                                            <tr>
+                                        </if>
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                        </if>
+                                        <td>{$vo.remark}</td>
+                                        <td>{$vo.current_room}</td>
+                                        <if condition="$vo.log_win gt 0">
+                                            <td style="color: red">{$vo.log_win}</td>
+                                            <else/>
+                                            <td>{$vo.log_win}</td>
+                                        </if>
+                                        <if condition="$vo.today_win gt 0">
+                                            <td style="color: red">{$vo.today_win}</td>
+                                            <else/>
+                                            <td>{$vo.today_win}</td>
+                                        </if>
+                                        <td>{$vo.sum_gold}</td>
+                                        <td>{$vo.insure_gold}</td>
+
+                                        <td><a href="__URL__/player_list?detail_id={$vo.buy_id}">{$vo.buy_id}</a></td>
+
+                                        <td>{$vo.buy_gold}</td>
+                                        <td><span style="color: red">{$vo.buy_remark}</span></td>
+
+                                        <!--<td>{$vo.ab}</td>-->
+
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="15">没有数据</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+
+
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

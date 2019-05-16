@@ -1,0 +1,214 @@
+<div class="span3">
+                        <div class="sidebar">
+                            <!--<ul class="widget widget-menu unstyled">-->
+                            	<!--<li class="active"><a href="__URL__/home"><i class="fa fa-cog fa-fw "></i>主页-->
+                                <!--</a></li>-->
+                                <!--<li class="active"><a href="__URL__/player"><i class="menu-icon icon-user"></i>玩家列表-->
+                                <!--</a></li>-->
+                                <!--<li><a href="__URL__/winlist"><i class="menu-icon icon-inbox"></i>玩家输赢明细 </a></li>-->
+                                <!--<li><a href="__URL__/goldchange"><i class="menu-icon icon-user"></i>金币变动记录 </a></li>-->
+                                <!--<li><a href="__URL__/cardinfo"><i class="menu-icon icon-lock"></i>牌局信息 <b class="label green pull-right">-->
+                                    <!--</b> </a></li>-->
+                                <!--<li><a href="__URL__/room_config"><i class="menu-icon icon-tasks"></i>奖池明细 <b class="label orange pull-right">-->
+                                    <!--</b> </a></li>-->
+                            <!--</ul>-->
+                            <!--/.widget-nav-->
+                            
+                            
+                            
+                            <!--/.widget-nav-->
+
+                            <ul class="widget widget-menu unstyled" >
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cogs">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>系统管理 </a>
+                                    <ul id="togglePages" class="collapse unstyled">
+                                        <if condition="$Think.session.power.adminlist eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/admin_list')}"><i class="icon-circle-blank"></i>管理员列表 </a></li>
+                                        </if>
+                                        <if condition="$Think.session.power.loginlog eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>1))}"><i class="icon-circle-blank"></i>登录记录</a></li>
+                                        </if>
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/ip_allow')}"><i class="icon-circle-blank"></i>IP限制开关</a></li>
+
+                                        <if condition="$Think.session.power.goldlog eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>2))}"><i class="icon-circle-blank"></i>添加金币记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.locklog eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>3))}"><i class="icon-circle-blank"></i>锁定玩家记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ban_deal_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>4))}"><i class="icon-circle-blank"></i>禁止交易记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.usertype_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>5))}"><i class="icon-circle-blank"></i>修改玩家类型记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.pool_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>6))}"><i class="icon-circle-blank"></i>添加奖池金币记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.ud_roll_back eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>11))}"><i class="icon-circle-blank"></i>撤回记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.controllerlog eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/ctr_record')}"><i class="icon-circle-blank"></i>管理员点控记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.controllerlog eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('System/do_log',array('tid'=>15))}"><i class="icon-circle-blank"></i>点卡生成记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.room eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/room_config')}"><i class="icon-circle-blank"></i>房间配置 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.room_out_in eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/room_rate')}"><i class="icon-circle-blank"></i>房间吞吐率 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.notice_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/notice')}"><i class="icon-circle-blank"></i>公告管理</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.platform eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/platform_detail')}"><i class="icon-circle-blank"></i>平台明细</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.platform_all_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/platform_all')}"><i class="icon-circle-blank"></i>平台总汇</a></li>
+                                        </if>
+
+                                    </ul>
+                                </li>
+
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages2"><i class="menu-icon icon-group">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>玩家管理 </a>
+                                    <ul id="togglePages2" class="collapse unstyled">
+
+
+                                        <if condition="$Think.session.power.searach eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_list')}"><i class="icon-circle-blank"></i>玩家列表 </a></li>
+                                        </if>
+<li style="background-color:#FFFFFF"><a href="{:U('User/bug_user')}"><i class="icon-circle-blank"></i>刷分玩家列表 </a></li>
+                                        <if condition="$Think.session.power.add_user eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('User/add_player')}"><i class="icon-circle-blank"></i>玩家注册 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.onlinelist eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_list',array('online_list1'=>1))}"><i class="icon-circle-blank"></i>玩家在线列表 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.tradelist eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_deal_list')}"><i class="icon-circle-blank"></i>玩家交易列表 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.protect_list eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_list',array('protect_list'=>1))}"><i class="icon-circle-blank"></i>玩家保护列表 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.pt_ctr eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('User/protect_ctr')}"><i class="icon-circle-blank"></i>保护点控 </a></li>
+                                        </if>
+
+                                        <!--<li style="background-color:#FFFFFF"><a href="{:U('User/player_detail')}"><i class="icon-inbox"></i>玩家详情</a></li>-->
+                                        <if condition="$Think.session.power.message eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_msg')}"><i class="icon-circle-blank"></i>玩家留言列表</a></li>
+                                        </if>
+                                        <!--<li style="background-color:#FFFFFF"><a href="{:U('User/player_msg_detail')}"><i class="icon-inbox"></i>玩家留言详情</a></li>-->
+
+                                        <if condition="$Think.session.power.userlogin eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_login_log')}"><i class="icon-circle-blank"></i>登录记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.all_pr eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_presents_log')}"><i class="icon-circle-blank"></i>玩家转账记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.p_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/present_log')}"><i class="icon-circle-blank"></i>金币赠送记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.r_log eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/received_log')}"><i class="icon-circle-blank"></i>金币接收记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.goldchange eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_gold_change_log')}"><i class="icon-circle-blank"></i>金币变动记录</a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.winlist eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('User/player_win_data')}"><i class="icon-circle-blank"></i>用户输赢记录</a></li>
+                                        </if>
+                                    </ul>
+                                </li>
+
+
+                                <if condition="$Think.session.power.viplist eq 1">
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages4"><i class="menu-icon icon-user">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>至尊VIP </a>
+                                    <ul id="togglePages4" class="collapse unstyled">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('Vip/viplist')}"><i class="icon-circle-blank"></i>VIP列表 </a></li>
+
+                                    </ul>
+                                </li>
+                                </if>
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages6"><i class="menu-icon icon-bar-chart">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>图表数据 </a>
+                                    <ul id="togglePages6" class="collapse unstyled">
+                                        <if condition="$Think.session.power.gp_online eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('Graph/online')}"><i class="icon-circle-blank"></i>玩家在线图表 </a></li>
+                                        </if>
+                                        <if condition="$Think.session.power.gp_online1 eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('Graph/online1')}"><i class="icon-circle-blank"></i>玩家在线图表（仅房间） </a></li>
+                                        </if>
+                                        <if condition="$Think.session.power.gp_reg eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('Graph/register')}"><i class="icon-circle-blank"></i>日总注册图表 </a></li>
+                                        </if>
+                                        <if condition="$Think.session.power.gp_active eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('Graph/active')}"><i class="icon-circle-blank"></i>日总活跃图表 </a></li>
+                                        </if>
+
+                                        <if condition="$Think.session.power.gp_room eq 1">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('Graph/room_blood')}"><i class="icon-circle-blank"></i>房间血池变化</a></li>
+                                        </if>
+                                        <if condition="$Think.session.power.gp_alive eq 1">
+                                            <li style="background-color:#FFFFFF"><a href="{:U('Graph/alive1')}"><i class="icon-circle-blank"></i>留存统计图表</a></li>
+                                        </if>
+                                    </ul>
+                                </li>
+
+                                <if condition="$Think.session.power.ud_card_list eq 1">
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages5"><i class="menu-icon icon-credit-card">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                                </i>点卡管理 </a>
+                                    <ul id="togglePages5" class="collapse unstyled">
+                                        <li style="background-color:#FFFFFF"><a href="{:U('System/card_list')}"><i class="icon-circle-blank"></i>点卡列表 </a></li>
+                                        <li style="background-color:#FFFFFF"><a href="#"><i class="icon-circle-blank"></i>点卡配置 </a></li>
+                                    </ul>
+                                </li>
+                                </if>
+
+
+
+                            </ul>
+                            <ul class="widget widget-menu unstyled" >
+                                <li><a href="{:U('System/unlink')}"><i class="menu-icon icon-refresh"></i>清空缓存 </a></li>
+                                <!--<li><a href="{:U('Pay/index')}"><i class="menu-icon icon-refresh"></i>PAY</a></li>-->
+                                <li><a href="{:U('System/log_out')}"><i class="menu-icon icon-signout"></i>退出 </a></li>
+                            </ul>
+
+                        </div>
+                        <!--/.sidebar-->
+                    </div>
+                    <!--/.span3-->

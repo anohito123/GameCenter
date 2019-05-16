@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开通VIP</title>
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link type="text/css" href="__PUBLIC__/admin/css/theme.css" rel="stylesheet">
+
+    <link type="text/css" href="__PUBLIC__/admin/css/page.css" rel="stylesheet">
+    <!--<link type="text/css" href="__PUBLIC__/admin/images/icons/css/font-awesome.css" rel="stylesheet">-->
+    <link type="text/css" href="__PUBLIC__/admin/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+          rel='stylesheet'>
+
+    <link rel="stylesheet" href="__PUBLIC__/admin/data/css/style.css" />
+
+    <style>
+        .ts{ display:none; }
+
+        .player_detail{margin-left: 30px !important;text-align: left !important; width: 450px !important; color: #000}
+        .player_detail span{ font-size: 16px}
+        .player_button { width: 220px; height: 35px; line-height: 35px; margin: 10px 110px 10px 0}
+    </style>
+</head>
+    <body>
+        <include file="./Application/Admin/View/public/v_nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+
+                    <!--/.span3-->
+                    <div class="span9" style="width: 80%; margin-left: 10%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>开通VIP</h3>
+							</div>
+							<div class="module-body table">
+                                <empty name="data">
+                                    <h3 style="text-align: center"><span style="color: #0e90d2">请输入一个玩家ID！</span></h3>
+                                    <else/>
+                                    <h3 style="text-align: center">玩家【<span style="color: #0e90d2">{$data[0].nickname}</span>】</h3>
+                                </empty>
+
+
+
+                                <form method="get" class="form-horizontal row-fluid" action="__APP__/Admin/User/only_v" name="player_list">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        玩家ID：
+                                        <input type="number" name="userid"  style="width:150px;height:25px;"/>
+
+                                        <input type="submit" class="btn btn-default btn-info godate" value="搜索玩家"/>
+                                    </div><br>
+
+
+
+                                    <div class="control-group">
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+                                        <table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%" style="table-layout: fixed">
+                                            <tr>
+                                                <td><span><b>游戏推广号：</b>  {$data[0].gameid}  </span></td>
+                                                <td><span><b>游戏昵称：</b>  {$data[0].nickname}  </span></td>
+                                                <td><span><b>玩家ID：</b>  {$data[0].userid}  </span></td>
+                                                <td><span><b>账号类型：</b>
+                                                    <notempty name="data">
+                                                <if condition = "$data[0][usertype] eq 4">
+                                                <span style="color: red">VIP</span>
+                                                </if>
+                                                <if condition = "$data[0][usertype] eq 0">
+                                                <span>普通玩家</span>
+                                                </if>
+                                                <else/>
+                                                --
+                                            </notempty>  </span></td>
+                                            </tr>
+
+
+                                        </table>
+
+                                    </div>
+
+                                </form>
+
+                                <hr>
+
+
+
+
+                                <!--<a class="btn btn-large btn-primary player_button" href="javascript:0" id="type_change">修改玩家类型</a>-->
+
+
+
+
+                                    </div>
+
+
+
+							</div>
+
+
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+
+
+
+
+
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+
+      
+    </body>

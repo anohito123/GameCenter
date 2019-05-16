@@ -1,0 +1,110 @@
+<include file="./Application/Admin/View/public/header.html" title="总金币变动记录" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>总金币变动记录</h3>
+							</div>
+							<div class="module-body table">
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped display" width="100%">
+									<thead>
+										<tr>
+											<th>玩家ID</th>
+                                            <th>昵称</th>
+                                            <th>房间</th>
+                                            <th>金币变化</th>
+                                            <th>房间总下注</th>
+                                            <th>最后记录时间</th>
+
+
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <notempty name="data">
+
+                                    <foreach name="data" item="vo">                                    <tr >
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.userid}</a></td>
+                                            <td><a href="__URL__/player_list?detail_id={$vo.userid}">{$vo.nick}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            <td>{$vo.nick}</td>
+
+                                        </if>
+                                        <td>{$vo.roomname}</td>
+                                        <td>{$vo.amount}</td>
+                                        <td>{$vo.sum_beton}</td>
+
+                                        <td>{$vo.last_time}</td>
+
+                                        <!--<td><a href="www.baidu.com" id="goback">撤回</a></td>-->
+
+                                    </tr>
+                                    </foreach>
+                                        <else/>
+                                        <td colspan="6">没有数据！</td>
+                                    </notempty>
+
+									</tbody>
+
+								</table>
+                                <div class="pages" style="">{$page}</div>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script>
+            $(function(){
+
+                $('#goback').click(function () {
+
+                    if(confirm("确认撤回？")){
+                        return true
+                    }else {
+                        return false
+                    }
+                })
+
+            });
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

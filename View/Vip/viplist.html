@@ -1,0 +1,181 @@
+<include file="./Application/Admin/View/public/header.html" title="VIP列表" />
+
+
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>VIP列表</h3>
+							</div>
+							<div class="module-body table">
+                                <div class="alert ts" style="margin: 10px;width: 370px;">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>提示：</strong><span class="tip"></span>
+                                </div>
+
+                                <form method="post" action="__URL__/viplist" name="plat_form">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        选择时间段：
+                                        <input type="text" name="stime" value="{$date.stime}"  style="width:100px;height:25px;" id="ECalendar_case1" /> -
+                                        <input type="text" name="etime"  value="{$date.etime}" style="width:100px;height:25px;" id="ECalendar_case2"	/>
+
+
+                                        <span style=" margin-left: 20px;"><soan style="font-weight: bolder"> 交易类型：</soan>
+
+                                            <if condition="$Think.session.deal_type eq 'player'">
+                                                <input type="radio" style="margin: 5px" name="deal_type" value="player" checked="checked" >
+                                                <span style="color:dodgerblue; font-weight: bolder">与玩家交易</span>
+                                                <else/>
+                                                <input type="radio" style="margin: 5px" name="deal_type" value="player">与玩家交易
+                                            </if>
+
+                                            <if condition="$Think.session.deal_type eq 'vip'">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="deal_type" value="vip" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">与VIP交易</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="deal_type" value="vip" >与VIP交易
+                                            </if>
+
+                                            <if condition="$Think.session.deal_type eq 'all'">
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="deal_type" value="all" checked="checked">
+                                                <span style="color:dodgerblue;font-weight: bolder">所有交易</span>
+                                                <else/>
+                                                 <input type="radio" style="margin: 5px 5px 5px 20px;" class="rd" name="deal_type" value="all" >所有交易
+                                            </if>
+
+
+                                        </span>
+
+                                        <input type="button" style="margin-left: 10px" class="btn btn-large btn-info godate" value="查询"/>
+
+                                    </div>
+                                    <div style="margin-bottom: 20px">
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">VIP总金币：<span style="color: red;font-weight: bolder">{$title.t_gold}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">VIP总保险柜金币：<span style="color: red;font-weight: bolder">{$title.sum_insure}</span></span>
+
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">VIP总人数：<span style="color: red;font-weight: bolder">{$title.t_vips}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">交易总笔数：<span style="color: red;font-weight: bolder">{$title.t_sum_times}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">交易总人数：<span style="color: red;font-weight: bolder">{$title.t_sum_person}</span></span>
+
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总赠送金币：<span style="color: red;font-weight: bolder">{$title.t_pgold}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总赠送笔数：<span style="color: red;font-weight: bolder">{$title.t_ptimes}</span></span><br>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总赠送人数：<span style="color: red;font-weight: bolder">{$title.t_pperson}</span></span>
+
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总接收金币：<span style="color: red;font-weight: bolder">{$title.t_rgold}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总接收笔数：<span style="color: red;font-weight: bolder">{$title.t_rtimes}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总接收人数：<span style="color: red;font-weight: bolder">{$title.t_rperson}</span></span>
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总顺差：<span style="color: red;font-weight: bolder">{$title.t_ab}</span></span>
+
+                                        <span style="padding-left: 15px;margin-right:42px;font-size: 14px">总税收：<span style="color: red;font-weight: bolder">
+                                        <if condition="$Think.session.deal_type neq 'vip'">
+                                            {$title.t_all_tax}
+                                            <else/>
+                                            -- （与VIP交易不计算税收）
+
+                                        </if>
+                                        </span></span>
+
+                                    </div>
+
+                                </form>
+
+
+								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
+
+
+									<thead>
+										<tr>
+                                            <th>ID</th>
+											<th>昵称</th>
+                                            <th>备注</th>
+											<th>金币</th>
+                                            <th>保险柜金币</th>
+                                            <th>赠送总额</th>
+                                            <th>接收总额</th>
+                                            <th>顺差</th>
+                                            <th>交易笔数</th>
+                                            <th>交易人数</th>
+
+                                            <th>赠送笔数</th>
+                                            <th>赠送人数</th>
+
+                                            <th>接收笔数</th>
+                                            <th>接收人数</th>
+
+
+                                            <if condition="$Think.session.deal_type eq 'player'">
+                                                <th>税收</th>
+                                            </if>
+                                            <th>注册时间</th>
+
+
+
+
+                                        </tr>
+									</thead>
+									<tbody>
+
+                                    <foreach name="data" item="vo">                                    <tr >
+                                        <if condition="$Think.session.power.link_user eq 1">
+                                            <td><a href="{:U('User/player_list',array('detail_id'=>$vo[userid]))}">{$vo.userid}</a></td>
+                                            <td><a href="{:U('User/player_list',array('detail_id'=>$vo[userid]))}">{$vo.nickname}</a></td>
+                                            <else/>
+                                            <td>{$vo.userid}</td>
+                                            <td>{$vo.nickname}</td>
+                                        </if>
+
+                                        <td style="color: red">{$vo.remark}</td>
+                                        <td>{$vo.sum_gold}</td>
+                                        <td>{$vo.insure_gold}</td>
+                                        <td>{$vo.sum_present}</td>
+                                        <td>{$vo.sum_received}</td>
+                                        <td>{$vo.ab}</td>
+                                        <td>{$vo.sum_times}</td>
+                                        <td>{$vo.sum_person}</td>
+
+                                        <td>{$vo.sum_present_times}</td>
+                                        <td><a href="__URL__/vip_deal_user?p_vipid={$vo.userid}&stime={$date.stime}&etime={$date.etime}">{$vo.sum_present_person}</a></td>
+
+
+                                        <td>{$vo.sum_received_times}</td>
+                                        <td><a href="__URL__/vip_deal_user?r_vipid={$vo.userid}&stime={$date.stime}&etime={$date.etime}">{$vo.sum_received_person}</a></td>
+
+
+                                        <if condition="$Think.session.deal_type eq 'player'">
+                                            <td>{$vo.sum_tax}</td>
+                                        </if>
+                                        <td>{$vo.registerdate}</td>
+
+
+                                    </tr>
+                                    </foreach>
+										
+										
+									</tbody>
+									
+								</table>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+         <include file="./Application/Admin/View/public/footer.html" name="管理员(请谨慎操作)？"/>
+      
+    </body>

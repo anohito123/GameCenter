@@ -1,0 +1,99 @@
+<include file="./Application/Admin/View/public/header.html" title="IP限制开关" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper" >
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+
+                    <div class="span9" style="width:33%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>IP限制开关</h3>
+							</div>
+
+							<div class="module-body table">
+                                <!--<span>总抽水：{$data.sum_water}</span>-->
+                                <!--<span>总取款：{$data.sum_money}</span>-->
+                                <!--<span>总保险：{$data.protect}</span>-->
+
+                                <form class="form-horizontal row-fluid" method="post" action="__URL__/change_ip_allow" name="go_pwd">
+
+                                    <div class="control-group" >
+
+                                        <!--<if condition="$data.sum_water neq ''">{$data.sum_water}<else/>0</if>-->
+                                        <!--<if condition="$data.sum_money neq ''">{$data.sum_money}<else/>0</if>-->
+                                        <!--<if condition="$data.protect neq ''">{$data.protect}<else/>0</if>-->
+
+
+
+                                    </div>
+                                    <span style="padding: 5px;font-size: 14px; margin-bottom: 10px">tip：打开此功能限制陌生IP登录，在登录记录中可对陌生IP进行锁定/解锁操作</span>
+                                    <br><br>
+                                    &nbsp;&nbsp;状态：
+                                    <select name="state">
+
+                                        <if condition="$data[0][state] eq 1">
+                                        <option value="1"  selected = "selected">开</option>
+                                        <option value="0">关</option>
+                                            <else/>
+                                            <option value="1">开</option>
+                                            <option value="0" selected = "selected">关</option>
+                                        </if>
+
+                                    </select><br><br>
+
+
+
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input type="submit" value="修改" class="btn btn-mini btn-info" id="do_pwd"/>
+                                        </div>
+                                    </div>
+                                </form>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+                        <!--<a class="btn btn-mini btn-info" href="add_admin">添加管理员</a>-->
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+
+
+            </div>
+            <!--/.container-->
+
+
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+
+
+
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/date/datedropper.min.js"></script>
+        <script src="__PUBLIC__/admin/date/timedropper.min.js"></script>
+
+        <script type="text/javascript" src="__PUBLIC__/admin/date/moment.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/admin/date/bootstrap-datetimepicker.js"></script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>

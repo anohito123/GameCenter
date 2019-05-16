@@ -1,0 +1,244 @@
+<include file="./Application/Admin/View/public/header.html" title="留存统计" />
+    <body>
+        <include file="./Application/Admin/View/public/nav.html"  />
+        <div class="wrapper">
+            <div class="container" style="width: 95%">
+                <div class="row">
+                    <include file="./Application/Admin/View/public/left.html"  />
+                    <!--/.span3-->
+                    <div class="span9" style="width: 82%">
+                        <div class="content">
+                        <div class="module">
+							<div class="module-head">
+								<h3>留存统计</h3>
+							</div>
+							<div class="module-body table">
+
+                                <form method="get" action="__URL__/alive" name="plat_form">
+                                    <div class="case" style="padding-left: 15px; margin-bottom: 10px; font-size: 13px">
+                                        选择日期：
+                                        <input type="text" name="stime"  value="{$Think.session.alive_stime}"  style="width:100px;height:25px;" id="ECalendar_case1" /> -
+                                        <input type="text" name="etime"  value="{$Think.session.alive_etime}"  style="width:100px;height:25px;" id="ECalendar_case2"	/>
+
+                                        <select name="type">
+                                            <if condition="$Think.session.a_type eq 'total'">
+                                            <option value="single">单日留存</option>
+                                            <option value="total" selected="selected">汇总留存</option>
+                                                <else/>
+                                                <option value="single">单日留存</option>
+                                                <option value="total">汇总留存</option>
+                                            </if>
+                                        </select>
+                                        <input type="submit" class="btn btn-mini btn-info godate" value="查询"/>
+
+
+                                        <span style="float: right; margin-right: 15%;color:#09F">※ 查询上限为30天，默认显示近15天数据</span>
+                                    </div>
+                                </form>
+
+                                <div id="main" style="width: 100%;height:500px; margin-left: -5%"></div>
+
+								<table cellpadding="0" cellspacing="0" border="0" class=" table table-bordered table-striped	 display" width="100%">
+									<thead>
+										<tr>
+											<th>注册时间</th>
+                                            <th>注册总数</th>
+											<th>1日</th>
+                                            <th>2日</th>
+                                            <th>3日</th>
+                                            <th>4日</th>
+                                            <th>5日</th>
+                                            <th>6日</th>
+                                            <th>7日</th>
+                                            <th>10日</th>
+                                            <th>15日</th>
+                                            <th>25日</th>
+                                            <th>30日</th>
+                                        </tr>
+									</thead>
+									<tbody>
+                                    <foreach name="data" item="vo">
+                                        <tr >
+                                        <td>{$vo.time}</td>
+                                        <td>{$vo.reg_total}</td>
+                                        <td>{$vo.day1}</td>
+                                            <td>{$vo.day2}</td>
+                                            <td>{$vo.day3}</td>
+                                            <td>{$vo.day4}</td>
+                                            <td>{$vo.day5}</td>
+                                            <td>{$vo.day6}</td>
+                                            <td>{$vo.day7}</td>
+                                            <td>{$vo.day10}</td>
+                                            <td>{$vo.day15}</td>
+                                            <td>{$vo.day25}</td>
+                                            <td>{$vo.day30}</td>
+
+
+										</tr>
+                                    </foreach>
+										
+										
+									</tbody>
+									
+								</table>
+							</div>
+						</div><!--/.module-->
+
+                           </div> 
+                        <!--/.content-->
+
+                    </div>
+                    <!--/.span9-->
+                    
+                   
+                </div>
+            </div>
+            <!--/.container-->
+        </div>
+        <!--/.wrapper-->
+        <div class="footer">
+            <div class="container" style="width: 95%">
+                <b class="copyright">&copy; 2018 后台管理系统 - 技术支持RyanLiu </b> - 备案信息：xxxxxxxx号
+            </div>
+        </div>
+        <script src="__PUBLIC__/admin/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+
+        <script src="__PUBLIC__/admin/data/js/jquery.min.js"></script>
+        <script src="__PUBLIC__/admin/data/js/Ecalendar.jquery.min.js"></script>
+        <script type="text/javascript">
+
+
+            $("#ECalendar_case1").ECalendar({
+                type:"date",
+                skin:"#233",
+                offset:[0,2]
+            });
+            $("#ECalendar_case2").ECalendar({
+                type:"date",
+                skin:"#233",
+                offset:[0,2]
+            });
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            var gp = 'alive';
+            $.get("__URL__/alive",{'gp':gp},function(data){
+
+                var arr = data.split(";");
+                var date_arr = arr[0].split(",");
+                var total_arr = arr[1].split(",");
+                var day1 = arr[2].split(",");
+                var day2 = arr[3].split(",");
+                var day3 = arr[4].split(",");
+                var day4 = arr[5].split(",");
+                var day5 = arr[6].split(",");
+                var day6 = arr[7].split(",");
+                var day7 = arr[8].split(",");
+                var day10 = arr[9].split(",");
+                var day15 = arr[10].split(",");
+                var day25 = arr[11].split(",");
+                var day30 = arr[12].split(",");
+
+                console.log(arr);
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: '',
+                        left: 'center'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data: ['总注册','1日','2日','3日','4日','5日','6日','7日','10日','15日','25日','30日']
+                    },
+                    xAxis: {
+                        type: 'category',
+                        name: '时间',
+                        data: date_arr
+                    },
+                    yAxis: {
+                        name: '人数',
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '总注册',
+                            type: 'line',
+                            data: total_arr
+                        },
+                        {
+                            name: '1日',
+                            type: 'line',
+                            data: day1
+                        },
+                        {
+                            name: '2日',
+                            type: 'line',
+                            data: day2
+                        },
+                        {
+                            name: '3日',
+                            type: 'line',
+                            data: day3
+                        },
+                        {
+                            name: '4日',
+                            type: 'line',
+                            data: day4
+                        },
+                        {
+                            name: '5日',
+                            type: 'line',
+                            data: day5
+                        },
+                        {
+                            name: '6日',
+                            type: 'line',
+                            data: day6
+                        },
+                        {
+                            name: '7日',
+                            type: 'line',
+                            data: day7
+                        },
+                        {
+                            name: '10日',
+                            type: 'line',
+                            data: day10
+                        },
+                        {
+                            name: '15日',
+                            type: 'line',
+                            data: day15
+                        },
+                        {
+                            name: '25日',
+                            type: 'line',
+                            data: day25
+                        },
+                        {
+                            name: '30日',
+                            type: 'line',
+                            data: day30
+                        }
+
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+            });
+
+        </script>
+
+        <script src="__PUBLIC__/admin/scripts/common.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.pie.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script>
+        <script src="__PUBLIC__/admin/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    </body>
