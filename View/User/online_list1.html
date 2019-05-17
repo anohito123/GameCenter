@@ -153,24 +153,24 @@
                                             <else/>
                                             <td>{$vo.userid}</td>
                                         </if>
-                                        <td>{$vo.remark}</td>
-                                        <td>{$vo.current_room}</td>
+                                        <td>{$vo.extends}</td>
+                                        <td>{$vo.roomname}</td>
                                         <if condition="$vo.log_win gt 0">
-                                            <td style="color: red">{$vo.log_win}</td>
+                                            <td style="color: red">{$vo.totalwinlose}</td>
                                             <else/>
-                                            <td>{$vo.log_win}</td>
+                                            <td>{$vo.totalwinlose}</td>
                                         </if>
                                         <if condition="$vo.today_win gt 0">
-                                            <td style="color: red">{$vo.today_win}</td>
+                                            <td style="color: red">{$vo.daywinlose}</td>
                                             <else/>
-                                            <td>{$vo.today_win}</td>
+                                            <td>{$vo.daywinlose}</td>
                                         </if>
-                                        <td>{$vo.sum_gold}</td>
-                                        <td>{$vo.insure_gold}</td>
+                                        <td>{$vo.score}</td>
+                                        <td>{$vo.insurescore}</td>
 
-                                        <td><a href="__URL__/player_list?detail_id={$vo.buy_id}">{$vo.buy_id}</a></td>
+                                        <td><a href="__URL__/player_list?detail_id={$vo.buy_id}">{$vo.lasttransvipid}</a></td>
 
-                                        <td>{$vo.buy_gold}</td>
+                                        <td>{$vo.lasttransvipscore}</td>
                                         <td><span style="color: red">{$vo.buy_remark}</span></td>
 
                                         <!--<td>{$vo.ab}</td>-->

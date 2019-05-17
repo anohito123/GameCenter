@@ -300,6 +300,14 @@ class UserController extends BaseController {
         }
     }
 
+    //在线玩家列表
+    public function online_list1(){
+           $res =  M()->query("exec [dbo].[Web_Select_Online_User]");
+           dump($res);
+            $this->assign('data',$res);
+            $this->display();
+    }
+
     public function get_buy_zero(){
             $stime = I('get.stime',0);
         $etime = I('get.etime',0);
